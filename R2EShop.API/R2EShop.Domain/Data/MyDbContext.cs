@@ -19,7 +19,7 @@ namespace R2EShop.Domain.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=R2EShop;User Id=sa;Password=12345;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("server=.\\SQLExpress;database=R2EShop;uid=sa;password=12345;TrustServerCertificate=true;");
         }
     }
 }
