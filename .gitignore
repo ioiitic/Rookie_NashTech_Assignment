@@ -1,0 +1,86 @@
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# NuGet Packages
+*.nuget.props
+*.lock
+*.exe
+*.nupkg
+*.pfx
+*.snk
+*.sw?
+*.vsix
+*.sqlite
+*.cache
+*.DS_Store
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+# Mobile Build
+[Dd]roid/[Bb]in/
+[Dd]roid/[Oo]bj/
+i[Oo]S/[Bb]in/
+i[Oo]S/[Oo]bj/
+# Unity3D builds
+/[Bb]uild/
+# Xamarin
+*.apk
+*.aab
+# Gradle build outputs
+build/
+# Local history (IDE)
+.history/
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+# Rider
+.idea/
+*.sln.iml
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono-specific
+mono_crash.*
+
+# Visual Studio 2019
+.vs/
+*.vspscc
+*.vssscc
+.vscode/
+*.njsproj
+*.sln.ide
+*.suo
+*.sln.ide
+*.suo
+*.ldb
+*.pdb
+*.dll
+*.exe
+*.log
+*.vsix
