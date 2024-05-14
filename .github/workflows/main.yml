@@ -79,5 +79,11 @@ jobs:
         name: R2EShop.API-build-artifacts
         path: .
 
+    - name: Restore dependencies
+      run: dotnet restore ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj
+
+    - name: Build
+      run: dotnet build ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-restore -c Release
+      
     - name: Test
       run: dotnet test ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-build --verbosity normal
