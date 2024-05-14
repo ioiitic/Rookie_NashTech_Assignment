@@ -1,0 +1,59 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [ 'R2eShop.Domain', 'R2eShop.Contracts', 'R2eShop.Application', 'R2eShop.Infreastructure', 'R2eShop.Application', 'R2eShop.API' ]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.202'
+
+    - name: Restore dependencies
+      run: dotnet restore ${{ matrix.project }}.csproj
+
+    - name: Build
+      run: dotnet build ${{ matrix.project }}.csproj --no-restore -c Release
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.project }}-build-artifacts
+        path: |
+          ${{ matrix.project }}/bin/
+          ${{ matrix.project }}/obj/
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.202'
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ matrix.project }}-build-artifacts
+        path: .
+
+    - name: Test
+      run: dotnet test Project1/Project1.csproj --no-build --verbosity normal
