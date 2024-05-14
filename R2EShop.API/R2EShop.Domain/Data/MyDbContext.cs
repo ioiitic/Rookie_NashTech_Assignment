@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,14 @@ namespace R2EShop.Domain.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=.\\SQLExpress;database=R2EShop;uid=sa;password=12345;TrustServerCertificate=true;");
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../R2EShop.API/"))
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            optionsBuilder.UseSqlServer(connectionString);
         }
     }
 }
