@@ -85,5 +85,13 @@ jobs:
     - name: Build
       run: dotnet build ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-restore -c Release
       
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: R2EShop.UnitTest-build-artifacts
+        path: |
+          ./R2EShop.API/R2EShop.UnitTest/bin/
+          ./R2EShop.API/R2EShop.UnitTest/obj/
+          
     - name: Test
-      run: dotnet test ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --verbosity normal
+      run: dotnet test ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-build --verbosity normal
