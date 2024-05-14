@@ -23,15 +23,15 @@ jobs:
         dotnet-version: '7.0.202'
 
     - name: Restore dependencies
-      run: dotnet restore ${{ matrix.project }}.csproj
+      run: dotnet restore ./R2EShop.API/${{ matrix.project }}.csproj
 
     - name: Build
-      run: dotnet build ${{ matrix.project }}.csproj --no-restore -c Release
+      run: dotnet build ./R2EShop.API/${{ matrix.project }}.csproj --no-restore -c Release
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.project }}-build-artifacts
+        name: ./R2EShop.API/${{ matrix.project }}-build-artifacts
         path: |
           ${{ matrix.project }}/bin/
           ${{ matrix.project }}/obj/
@@ -52,8 +52,8 @@ jobs:
     - name: Download build artifacts
       uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.project }}-build-artifacts
+        name: ./R2EShop.API/${{ matrix.project }}-build-artifacts
         path: .
 
     - name: Test
-      run: dotnet test Project1/Project1.csproj --no-build --verbosity normal
+      run: dotnet test ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-build --verbosity normal
