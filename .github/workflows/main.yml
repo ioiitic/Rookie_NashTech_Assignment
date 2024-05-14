@@ -29,7 +29,7 @@ jobs:
       run: dotnet build ./R2EShop.API/${{ matrix.project }}/${{ matrix.project }}.csproj --no-restore -c Release
 
     - name: Upload build artifacts
-      uses: actions/${{ matrix.project }}/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.project }}-build-artifacts
         path: |
@@ -53,7 +53,7 @@ jobs:
         dotnet-version: '7.0.202'
 
     - name: Download build artifacts
-      uses: actions/${{ matrix.project }}/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name:  ${{ matrix.project }}-build-artifacts
         path: .
