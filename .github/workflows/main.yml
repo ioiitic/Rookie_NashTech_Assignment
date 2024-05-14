@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [ 'R2EShop.Domain', 'R2EShop.Contracts', 'R2EShop.Application', 'R2EShop.Infreastructure', 'R2EShop.API' ]
+        project: [ 'R2EShop.Domain', 'R2EShop.Contracts', 'R2EShop.Application', 'R2EShop.Infrastructure', 'R2EShop.API' ]
 
     steps:
     - name: Checkout code
@@ -41,7 +41,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        project: [ 'R2EShop.Domain', 'R2EShop.Contracts', 'R2EShop.Application', 'R2EShop.Infreastructure', 'R2EShop.API' ]
+        project: [ 'R2EShop.Domain', 'R2EShop.Contracts', 'R2EShop.Application', 'R2EShop.Infrastructure', 'R2EShop.API' ]
 
     steps:
     - name: Checkout code
