@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [ 'R2eShop.Domain', 'R2eShop.Contracts', 'R2eShop.Application', 'R2eShop.Infreastructure', 'R2eShop.Application', 'R2eShop.API' ]
+        project: [ '', 'R2eShop.Contracts', 'R2eShop.Application', 'R2eShop.Infreastructure', 'R2eShop.Application', 'R2eShop.API' ]
 
     steps:
     - name: Checkout code
@@ -23,18 +23,18 @@ jobs:
         dotnet-version: '7.0.202'
 
     - name: Restore dependencies
-      run: dotnet restore ./R2EShop.API/${{ matrix.project }}.csproj
+      run: dotnet restore ./R2EShop.API/${{ matrix.project }}/${{ matrix.project }}.csproj
 
     - name: Build
-      run: dotnet build ./R2EShop.API/${{ matrix.project }}.csproj --no-restore -c Release
+      run: dotnet build ./R2EShop.API/${{ matrix.project }}/${{ matrix.project }}.csproj --no-restore -c Release
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/${{ matrix.project }}/upload-artifact@v3
       with:
-        name: ./R2EShop.API/${{ matrix.project }}-build-artifacts
+        name: ${{ matrix.project }}-build-artifacts
         path: |
-          ${{ matrix.project }}/bin/
-          ${{ matrix.project }}/obj/
+          ./R2EShop.API/${{ matrix.project }}/bin/
+          ./R2EShop.API/${{ matrix.project }}/obj/
 
   test:
     runs-on: ubuntu-latest
@@ -50,9 +50,9 @@ jobs:
         dotnet-version: '7.0.202'
 
     - name: Download build artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/${{ matrix.project }}/upload-artifact@v3
       with:
-        name: ./R2EShop.API/${{ matrix.project }}-build-artifacts
+        name:  ${{ matrix.project }}-build-artifacts
         path: .
 
     - name: Test
