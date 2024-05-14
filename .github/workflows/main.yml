@@ -39,9 +39,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: build
-    strategy:
-      matrix:
-        project: [ 'R2EShop.Domain', 'R2EShop.Contracts', 'R2EShop.Application', 'R2EShop.Infrastructure', 'R2EShop.API' ]
 
     steps:
     - name: Checkout code
@@ -52,10 +49,34 @@ jobs:
       with:
         dotnet-version: '7.0.202'
 
-    - name: Download build artifacts
-      uses: actions/upload-artifact@v3
+    - name: Download R2EShop.Domain build artifacts
+      uses: actions/download-artifact@v3
       with:
-        name:  ${{ matrix.project }}-build-artifacts
+        name: R2EShop.Domain-build-artifacts
+        path: .
+
+    - name: Download R2EShop.Contracts build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: R2EShop.Contracts-build-artifacts
+        path: .
+
+    - name: Download R2EShop.Application build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: R2EShop.Application-build-artifacts
+        path: .
+
+    - name: Download R2EShop.Infrastructure build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: R2EShop.Infrastructure-build-artifacts
+        path: .
+
+    - name: Download R2EShop.API build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: R2EShop.API-build-artifacts
         path: .
 
     - name: Test
