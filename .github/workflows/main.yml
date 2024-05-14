@@ -86,4 +86,4 @@ jobs:
       run: dotnet build ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-restore -c Release
       
     - name: Test
-      run: dotnet test ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --no-build --verbosity normal
+      run: dotnet test ./R2EShop.API/R2EShop.UnitTest/R2EShop.UnitTest.csproj --verbosity normal
