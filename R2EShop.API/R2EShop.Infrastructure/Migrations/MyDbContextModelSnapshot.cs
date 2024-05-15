@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using R2EShop.Domain.Data;
+using R2EShop.Infrastructure.Data;
 
 #nullable disable
 
-namespace R2EShop.Domain.Migrations
+namespace R2EShop.Infrastructure.Migrations
 {
     [DbContext(typeof(MyDbContext))]
     partial class MyDbContextModelSnapshot : ModelSnapshot
@@ -28,10 +28,10 @@ namespace R2EShop.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Photo_Url")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ProductId")
@@ -47,7 +47,6 @@ namespace R2EShop.Domain.Migrations
             modelBuilder.Entity("R2EShop.Domain.Entities.Feedback", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
@@ -56,17 +55,12 @@ namespace R2EShop.Domain.Migrations
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("RatingUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<float?>("Score")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("RatingUserId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -90,17 +84,17 @@ namespace R2EShop.Domain.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("R2EShop.Domain.Entities.OrderDetail", b =>
+            modelBuilder.Entity("R2EShop.Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<float?>("ItemPrice")
+                        .HasColumnType("real");
+
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<float?>("Price")
-                        .HasColumnType("real");
 
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -123,13 +117,13 @@ namespace R2EShop.Domain.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Photo_Url")
+                    b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("Price")
+                    b.Property<float?>("ProductPrice")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
@@ -143,19 +137,16 @@ namespace R2EShop.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
+                    b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Photo_Url")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -166,21 +157,29 @@ namespace R2EShop.Domain.Migrations
             modelBuilder.Entity("R2EShop.Domain.Entities.Category", b =>
                 {
                     b.HasOne("R2EShop.Domain.Entities.Product", null)
-                        .WithMany("Category")
+                        .WithMany("Categories")
                         .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.Feedback", b =>
                 {
-                    b.HasOne("R2EShop.Domain.Entities.Product", "Product")
+                    b.HasOne("R2EShop.Domain.Entities.Product", "RatingProduct")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("R2EShop.Domain.Entities.User", "RatingUser")
                         .WithMany()
-                        .HasForeignKey("RatingUserId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Product");
+                    b.HasOne("R2EShop.Domain.Entities.Product", null)
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("RatingProduct");
 
                     b.Navigation("RatingUser");
                 });
@@ -194,10 +193,10 @@ namespace R2EShop.Domain.Migrations
                     b.Navigation("OrderUser");
                 });
 
-            modelBuilder.Entity("R2EShop.Domain.Entities.OrderDetail", b =>
+            modelBuilder.Entity("R2EShop.Domain.Entities.OrderItem", b =>
                 {
                     b.HasOne("R2EShop.Domain.Entities.Order", null)
-                        .WithMany("Detail")
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("R2EShop.Domain.Entities.Product", "Product")
@@ -207,14 +206,46 @@ namespace R2EShop.Domain.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("R2EShop.Domain.Entities.User", b =>
+                {
+                    b.OwnsOne("R2EShop.Domain.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("State")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("R2EShop.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("Detail");
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.Product", b =>
                 {
-                    b.Navigation("Category");
+                    b.Navigation("Categories");
+
+                    b.Navigation("Feedbacks");
                 });
 #pragma warning restore 612, 618
         }
