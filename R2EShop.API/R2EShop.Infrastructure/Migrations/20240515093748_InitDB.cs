@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace R2EShop.Domain.Migrations
+namespace R2EShop.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class R2EShop : Migration
+    public partial class InitDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,10 @@ namespace R2EShop.Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<float>(type: "real", nullable: true),
-                    Photo_Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ProductPrice = table.Column<float>(type: "real", nullable: true),
+                    PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,10 +32,12 @@ namespace R2EShop.Domain.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Fullname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Photo_Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address_State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,8 +49,8 @@ namespace R2EShop.Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Photo_Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -68,22 +70,28 @@ namespace R2EShop.Domain.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Score = table.Column<float>(type: "real", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RatingUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Feedbacks", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Feedbacks_Products_Id",
+                        column: x => x.Id,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Feedbacks_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Feedbacks_Users_RatingUserId",
-                        column: x => x.RatingUserId,
+                        name: "FK_Feedbacks_Users_Id",
+                        column: x => x.Id,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,7 +117,7 @@ namespace R2EShop.Domain.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: true),
+                    ItemPrice = table.Column<float>(type: "real", nullable: true),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -137,11 +145,6 @@ namespace R2EShop.Domain.Migrations
                 name: "IX_Feedbacks_ProductId",
                 table: "Feedbacks",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Feedbacks_RatingUserId",
-                table: "Feedbacks",
-                column: "RatingUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId",
