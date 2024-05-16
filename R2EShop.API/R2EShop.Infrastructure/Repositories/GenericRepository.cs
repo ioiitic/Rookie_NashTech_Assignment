@@ -21,20 +21,13 @@ namespace R2EShop.Infrastructure.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await _dbSet.ToListAsync();
-        }
+        public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbSet.ToListAsync();
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbSet.Where(predicate).ToListAsync();
-        }
+        public async Task<TEntity?> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate) => await _dbSet.FirstOrDefaultAsync(predicate);
 
-        public async Task<TEntity?> GetByIdAsync(object id)
-        {
-            return await _dbSet.FindAsync(id);
-        }
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate) => await _dbSet.Where(predicate).ToListAsync();
+
+        public async Task<TEntity?> GetByIdAsync(object id) => await _dbSet.FindAsync(id);
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {

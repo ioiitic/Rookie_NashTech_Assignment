@@ -18,6 +18,7 @@
     <ProjectReference Include="..\R2EShop.Application\R2EShop.Application.csproj" />
     <ProjectReference Include="..\R2EShop.Contracts\R2EShop.Contracts.csproj" />
     <ProjectReference Include="..\R2EShop.Domain\R2EShop.Domain.csproj" />
+    <ProjectReference Include="..\R2EShop.Infrastructure\R2EShop.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
