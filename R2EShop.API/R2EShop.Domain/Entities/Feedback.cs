@@ -11,23 +11,9 @@ namespace R2EShop.Domain.Entities
 {
     public class Feedback : Entity
     {
-        public float? Score { get; private set; }
-        public string? Comment { get; private set; }
-        public virtual User? RatingUser { get; private set; }
-        public virtual Product? RatingProduct { get; private set; }
-        public Feedback() { }
-
-        private Feedback(float score, string comment, User ratingUser, Product ratingProduct)
-        {
-            Score = score;
-            Comment = comment;
-            RatingUser = ratingUser;
-            RatingProduct = ratingProduct;
-        }
-
-        public static Feedback Create(float score, string comment, User ratingUser, Product ratingProduct)
-        {
-            return new Feedback(score, comment, ratingUser, ratingProduct);
-        }
+        public float Score { get; set; }
+        public string? Comment { get; set; }
+        public User? User { get; set; }
+        public Product? Product { get; set; }
     }
 }

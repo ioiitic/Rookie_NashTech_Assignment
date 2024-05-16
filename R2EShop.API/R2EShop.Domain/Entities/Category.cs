@@ -9,20 +9,8 @@ namespace R2EShop.Domain.Entities
 {
     public class Category : Entity
     {
-        public string? CategoryName { get; private set; }
-        public string? PhotoUrl { get; private set; }
-
-        public Category() { }
-
-        private Category(string categoryName, string photoUrl)
-        {
-            CategoryName = categoryName;
-            PhotoUrl = photoUrl;
-        }
-
-        public static Category Create(string categoryName, string photoUrl)
-        {
-            return new Category(categoryName, photoUrl);
-        }
+        public string? CategoryName { get; set; }
+        public string? PhotoUrl { get; set; }
+        public virtual ICollection<Product>? Products { get; set; }
     }
 }
