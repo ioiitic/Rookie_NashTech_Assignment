@@ -34,16 +34,6 @@ namespace R2EShop.Infrastructure.Data
         {
             modelBuilder.Entity<User>()
                 .OwnsOne(u => u.Address);
-
-            modelBuilder.Entity<Feedback>()
-                .HasOne(f => f.RatingUser)
-                .WithMany()
-                .HasForeignKey(f => f.Id);
-
-            modelBuilder.Entity<Feedback>()
-                .HasOne(f => f.RatingProduct)
-                .WithMany()
-                .HasForeignKey(f => f.Id);
         }
     }
 }

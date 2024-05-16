@@ -8,28 +8,14 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Domain.Entities
 {
-    public class User : IAggregateRoot
+    public class User : Entity
     {
-        public string? Fullname { get; private set; }
-        public string? EmailAddress { get; private set; }
-        public Address? Address { get; private set; }
-        public string? PhoneNumber { get; private set; }
-        public string? PhotoUrl { get; private set; }
-
-        private User() { }
-
-        private User(string fullname, string emailAddress, Address address, string phoneNumber, string photoUrl)
-        {
-            Fullname = fullname;
-            EmailAddress = emailAddress;
-            Address = address;
-            PhoneNumber = phoneNumber;
-            PhotoUrl = photoUrl;
-        }
-
-        public static User Create(string fullname, string emailAddress, Address address, string phoneNumber, string photoUrl)
-        {
-            return new User(fullname, emailAddress, address, phoneNumber, photoUrl);
-        }
+        public string? Fullname { get; set; }
+        public string? EmailAddress { get; set; }
+        public Address? Address { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? PhotoUrl { get; set; }
+        public virtual ICollection<Feedback>? Feedbacks { get; set; }
+        public virtual ICollection<Order>? Orders { get; set; }
     }
 }

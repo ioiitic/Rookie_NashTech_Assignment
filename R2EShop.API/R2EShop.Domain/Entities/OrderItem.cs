@@ -9,19 +9,8 @@ namespace R2EShop.Domain.Entities
 {
     public class OrderItem : Entity
     {
-        public float? ItemPrice { get; private set; }
-        public virtual Product? Product { get; private set; }
-
-        private OrderItem() { }
-        private OrderItem(float itemPrice, Product product)
-        {
-            ItemPrice = itemPrice;
-            Product = product;
-        }
-
-        public static OrderItem Create(float itemPrice, Product product)
-        {
-            return new OrderItem(itemPrice, product);
-        }
+        public float ItemPrice { get; set; }
+        public virtual Order? Order { get; set; }
+        public virtual Product? Product { get; set; }
     }
 }
