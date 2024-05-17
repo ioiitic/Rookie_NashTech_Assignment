@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.Application.Authentication.Command;
 using R2EShop.Contracts.Authentication;
-using static R2EShop.Application.Authentication.AuthenticationDTO;
+using static R2EShop.Application.CQRS.Authentication.AuthenticationDTO;
 
 namespace R2EShop.API.Controllers
 {
