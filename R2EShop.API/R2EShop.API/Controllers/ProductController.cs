@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using R2EShop.Application.CQRS.Authentication.Command.Register;
+using R2EShop.Application.CQRS.Products.Queries.GetProducts;
 using R2EShop.Domain.Entities;
 
 namespace R2EShop.API.Controllers
@@ -7,14 +11,27 @@ namespace R2EShop.API.Controllers
     [Route("products")]
     public class ProductController : ControllerBase
     {
-        //private MyDbContext _context = new MyDbContext();
+        private readonly IMediator _mediator;
+
+        public ProductController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult> GetAll(
+            [FromQuery] int? page,
+            [FromQuery] int? pageSize,
+            [FromQuery] string? search,
+            [FromQuery] int? minPrice,
+            [FromQuery] int? maxPrice,
+            [FromQuery] string[] categoryIds)
         {
-            //var products = _context.Products.ToList();
-            //return Ok(products);
-            return Ok();
+            var command = new GetProductsQuery(page, pageSize, search, minPrice, maxPrice, categoryIds);
+
+            var products = await _mediator.Send(command);
+
+            return Ok(products);
         }
 
         [HttpPost]
