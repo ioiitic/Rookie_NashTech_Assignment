@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using R2EShop.Application.Interface.Repositories;
+using R2EShop.Application.Interface.Common;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,17 +12,17 @@ namespace R2EShop.Application.Authentication.Command
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResult>
     {
-        private IGenericRepository<User> _genericRepository;
+        private readonly IUnitOfWork _uow;
 
-        public RegisterCommandHandler(IGenericRepository<User> genericRepository)
+        public RegisterCommandHandler(IUnitOfWork uow)
         {
-            _genericRepository = genericRepository;
+            _uow = uow;
         }
 
         public async Task<AuthenticationResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             // 1. Validate the user doesn't exist
-            var existUser = await _genericRepository.FindAsync(u => u.EmailAddress == request.EmailAddress);
+            var existUser = await _uow.Users.FindFirstOrDefaultAsync(u => u.EmailAddress == request.EmailAddress);
             if (existUser is not null)
             {
                 throw new Exception("User already exist");
@@ -38,7 +38,8 @@ namespace R2EShop.Application.Authentication.Command
                 PhotoUrl = request.PhotoUrl,
             };
 
-            await _genericRepository.AddAsync(user);
+            await _uow.Users.AddAsync(user);
+            await _uow.SaveChangesAsync();
 
             // 3. Create JWT Token
 

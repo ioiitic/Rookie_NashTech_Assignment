@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
 using System;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using R2EShop.Application.Interface.Repositories;
+using R2EShop.Application.Interface.Common;
 using R2EShop.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Infrastructure.Repositories
+namespace R2EShop.Infrastructure.Common
 { 
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
@@ -29,28 +29,22 @@ namespace R2EShop.Infrastructure.Repositories
 
         public async Task<TEntity?> GetByIdAsync(object id) => await _dbSet.FindAsync(id);
 
-        public async Task<TEntity> AddAsync(TEntity entity)
-        {
-            await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return entity;
-        }
+        public async Task AddAsync(TEntity entity) => await _dbSet.AddAsync(entity);
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
-        {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return entity;
-        }
+        public void Update(TEntity entity) => _dbSet.Update(entity);
 
-        public async Task DeleteAsync(object id)
+        public void Delete(TEntity entity)
         {
-            var entity = await _dbSet.FindAsync(id);
-            if (entity != null)
+            if (_context.Entry(entity).State == EntityState.Detached)
             {
-                _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
+                _dbSet.Attach(entity);
             }
+            _dbSet.Remove(entity);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

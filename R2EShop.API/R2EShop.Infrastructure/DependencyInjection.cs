@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;
+using R2EShop.Infrastructure.Common;
 using R2EShop.Infrastructure.Data;
 using R2EShop.Infrastructure.Repositories;
 using System;
@@ -16,8 +19,11 @@ namespace R2EShop.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddDbContext<MyDbContext>(options => options.LogTo(Console.WriteLine, LogLevel.Information));
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddDbContext<MyDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

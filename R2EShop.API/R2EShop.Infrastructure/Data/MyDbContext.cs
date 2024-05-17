@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace R2EShop.Infrastructure.Data
 {
     public class MyDbContext : DbContext
     {
+        private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -27,7 +29,8 @@ namespace R2EShop.Infrastructure.Data
 
             string connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseLoggerFactory(_loggerFactory)
+                .UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
