@@ -1,15 +1,15 @@
 using Newtonsoft.Json;
+using R2EShop.API;
+using R2EShop.Application;
+using R2EShop.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers()
-     .AddNewtonsoftJson(
-          options => { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; }
-      );
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddPresentation()
+    .AddApplication()
+    .AddInfrastructure();
 
 var app = builder.Build();
 
