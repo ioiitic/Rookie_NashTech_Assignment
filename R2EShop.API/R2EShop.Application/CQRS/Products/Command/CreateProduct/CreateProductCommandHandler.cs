@@ -10,18 +10,34 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product>
+    public class CreateProductCommandHandler : IRequest<CreateProductCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductRepository _productRepository;
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork)
+        public CreateProductCommandHandler(IProductRepository productRepository)
         {
-            _unitOfWork = unitOfWork;
+            _productRepository = productRepository;
         }
 
-        public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            return null;
+            // 1. Check categories list
+
+            // 2. Get list categories
+            var listCategories = new List<Category>();
+
+            // 3. Create new product
+            Product newProduct = new Product
+            {
+                ProductName = request.ProductName,
+                Description = request.Description,
+                ProductPrice = request.ProductPrice,
+                PhotoUrl = request.PhotoUrl,
+                Categories = listCategories,
+            };
+
+            // 4. Add Product
+            await _productRepository.AddAsync(newProduct);
         }
     }
 }

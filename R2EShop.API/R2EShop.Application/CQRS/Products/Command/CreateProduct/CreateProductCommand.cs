@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
 {
-    public record CreateProductCommand : IRequest<Product>
-    {
-        public string? ProductName { get; set; }
-        public string? Description { get; set; }
-        public float? ProductPrice { get; set; }
-        public string? PhotoUrl { get; set; }
-        public virtual IList<Guid>? Categories { get; set; }
-    }
+    public record CreateProductCommand
+    (
+        string ProductName,
+        string Description,
+        double ProductPrice,
+        string PhotoUrl,
+        IList<Guid>? Categories
+    ) : IRequest;
 }

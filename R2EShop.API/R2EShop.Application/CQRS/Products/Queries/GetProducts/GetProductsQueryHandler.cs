@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using R2EShop.Application.CQRS.Authentication.Queries.Login;
+using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
 using R2EShop.Domain.Specification;
