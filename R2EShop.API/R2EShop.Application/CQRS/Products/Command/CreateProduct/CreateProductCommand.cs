@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,5 @@ namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
         string Description,
         double ProductPrice,
         string PhotoUrl,
-        IList<Guid> Categories
-    ) : IRequest<Unit>;
+        IList<Guid> Categories) : IRequest<ErrorOr<Unit>>;
 }

@@ -36,7 +36,9 @@ namespace R2EShop.API.Controllers
             // 2. Get list products
             var products = await _mediator.Send(query);
 
-            return Ok(products);
+            return products.MatchFirst(
+                Ok,
+                error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
         }
 
         [HttpPost]
@@ -51,9 +53,11 @@ namespace R2EShop.API.Controllers
                 request.Categories);
 
             // 2. Create product
-            await _mediator.Send(command);
+            var createProduct = await _mediator.Send(command);
 
-            return Ok();
+            return createProduct.MatchFirst(
+                createProduct => Ok(createProduct),
+                error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
         }
     }
 }

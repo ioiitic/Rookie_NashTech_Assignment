@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Application.Interface.Common;
 using R2EShop.Domain.Entities;
 using R2EShop.Domain.Specification;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Products.Command.UpdateProduct
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Unit>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ErrorOr<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -19,7 +20,7 @@ namespace R2EShop.Application.CQRS.Products.Command.UpdateProduct
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Unit>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             // 1. Set up Specification
             var spec = new Specification<Product>();

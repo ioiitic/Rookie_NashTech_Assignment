@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Categories.Command.CreateCategory
 {
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, Unit>
+    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ErrorOr<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -19,7 +20,7 @@ namespace R2EShop.Application.CQRS.Categories.Command.CreateCategory
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Unit>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             // 1. Create new category
             Category newCategory = new Category

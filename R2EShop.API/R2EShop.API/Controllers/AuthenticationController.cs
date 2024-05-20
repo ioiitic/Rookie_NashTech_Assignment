@@ -1,15 +1,16 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using R2EShop.Application.CQRS.Authentication;
 using R2EShop.Application.CQRS.Authentication.Command.Register;
 using R2EShop.Contracts.Authentication;
-using static R2EShop.Application.CQRS.Authentication.AuthenticationDTO;
 
 namespace R2EShop.API.Controllers
 {
     [Route("authen")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : ApiController
     {
         private readonly IMediator _mediator;
 
@@ -23,9 +24,11 @@ namespace R2EShop.API.Controllers
         {
             var command = new RegisterCommand(request.Fullname, request.EmailAddress, request.Address, request.PhoneNumber, request.PhotoUrl);
 
-            AuthenticationResult result = await _mediator.Send(command);
+            ErrorOr<AuthenticationResult> result = await _mediator.Send(command);
 
-            return Ok(result);
+            return result.Match(
+                Ok,
+                errors => Problem(errors));
         }
 
         [HttpPost("login")]

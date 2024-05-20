@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,5 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
         string? search,
         int? minPrice,
         int? maxPrice,
-        string[] categoryIds) : IRequest<IList<Product>>;
+        string[] categoryIds) : IRequest<ErrorOr<IList<Product>>>;
 }

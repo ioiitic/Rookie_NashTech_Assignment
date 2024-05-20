@@ -1,17 +1,19 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Application.Interface.Common;
 using R2EShop.Domain.Entities;
+using R2EShop.Domain.Errors;
 using R2EShop.Domain.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static R2EShop.Application.CQRS.Authentication.AuthenticationDTO;
+using static R2EShop.Application.CQRS.Authentication.AuthenticationResult;
 
 namespace R2EShop.Application.CQRS.Authentication.Command.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResult>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
     {
         private readonly IUnitOfWork _uow;
 
@@ -20,25 +22,20 @@ namespace R2EShop.Application.CQRS.Authentication.Command.Register
             _uow = uow;
         }
 
-        public async Task<AuthenticationResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             // 1. Set up Specification for filter
             var spec = new Specification<User>();
+            spec.AddFilter(user => user.EmailAddress == request.EmailAddress);
 
-            // 2. Check for search request
-            if (!string.IsNullOrEmpty(request.EmailAddress))
-            {
-                spec.AddFilter(user => user.EmailAddress == request.EmailAddress);
-            }
-
-            // 3. Validate the user doesn't exist
+            // 2. Validate the user doesn't exist
             var existUser = await _uow.Users.FindFirstOrDefaultAsync(spec);
             if (existUser is not null)
             {
-                throw new Exception("User already exist");
+                return UserError.DuplicationEmail;
             }
 
-            // 4. Create user
+            // 3. Create user
             var user = new User
             {
                 Fullname = request.Fullname,
@@ -51,9 +48,11 @@ namespace R2EShop.Application.CQRS.Authentication.Command.Register
             await _uow.Users.AddAsync(user);
             await _uow.SaveChangesAsync();
 
-            // 5. Create JWT Token
+            // 4. Create JWT Token
 
-            return new(user, "");
+            var result = new AuthenticationResult(user, "");
+
+            return result;
         }
     }
 }

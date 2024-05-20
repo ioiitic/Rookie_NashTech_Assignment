@@ -1,4 +1,5 @@
-﻿using LinqKit;
+﻿using ErrorOr;
+using LinqKit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using R2EShop.Application.CQRS.Authentication.Queries.Login;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
 {
-    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IList<Product>>
+    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, ErrorOr<IList<Product>>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -24,7 +25,7 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IList<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IList<Product>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
             // 1. Set up Specification for filter
             var spec = new Specification<Product>();

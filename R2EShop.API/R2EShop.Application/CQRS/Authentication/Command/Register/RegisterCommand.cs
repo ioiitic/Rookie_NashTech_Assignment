@@ -1,11 +1,12 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static R2EShop.Application.CQRS.Authentication.AuthenticationDTO;
+using static R2EShop.Application.CQRS.Authentication.AuthenticationResult;
 
 namespace R2EShop.Application.CQRS.Authentication.Command.Register
 {
@@ -14,5 +15,5 @@ namespace R2EShop.Application.CQRS.Authentication.Command.Register
         string EmailAddress,
         Address Address,
         string PhoneNumber,
-        string PhotoUrl) : IRequest<AuthenticationResult>;
+        string PhotoUrl) : IRequest<ErrorOr<AuthenticationResult>>;
 }

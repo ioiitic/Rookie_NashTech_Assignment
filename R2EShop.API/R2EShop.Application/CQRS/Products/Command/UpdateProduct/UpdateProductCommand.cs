@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,5 @@ namespace R2EShop.Application.CQRS.Products.Command.UpdateProduct
         string Description,
         double ProductPrice,
         string PhotoUrl,
-        IList<Guid> Categories) : IRequest<Unit>;
+        IList<Guid> Categories) : IRequest<ErrorOr<Unit>>;
 }

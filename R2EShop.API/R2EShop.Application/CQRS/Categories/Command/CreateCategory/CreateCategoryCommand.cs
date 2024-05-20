@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,5 @@ namespace R2EShop.Application.CQRS.Categories.Command.CreateCategory
 {
     public record CreateCategoryCommand(
         string CategoryName,
-        string PhotoUrl) : IRequest<Unit>;
+        string PhotoUrl) : IRequest<ErrorOr<Unit>>;
 }

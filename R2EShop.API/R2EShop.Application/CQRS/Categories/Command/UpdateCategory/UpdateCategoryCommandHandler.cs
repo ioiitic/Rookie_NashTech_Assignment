@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
+using R2EShop.Domain.Errors;
 using R2EShop.Domain.Specification;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Categories.Command.UpdateCategory
 {
-    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Unit>
+    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ErrorOr<Unit>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -20,7 +22,7 @@ namespace R2EShop.Application.CQRS.Categories.Command.UpdateCategory
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Unit>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             // 1. Set up Specification
             var spec = new Specification<Category>();
@@ -32,7 +34,7 @@ namespace R2EShop.Application.CQRS.Categories.Command.UpdateCategory
             // 3. Check category is null
             if (updateCategory is null)
             {
-                throw new Exception();
+                return CategoryError.NotExist;
             }
 
             // 4. Update category

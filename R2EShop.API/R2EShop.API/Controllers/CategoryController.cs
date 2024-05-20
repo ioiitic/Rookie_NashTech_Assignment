@@ -1,9 +1,12 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.Application.CQRS.Categories.Command.CreateCategory;
 using R2EShop.Application.CQRS.Categories.Command.UpdateCategory;
 using R2EShop.Application.CQRS.Categories.Queries.GetCategories;
 using R2EShop.Contracts.Category;
+using R2EShop.Domain.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace R2EShop.API.Controllers
 {
@@ -26,8 +29,10 @@ namespace R2EShop.API.Controllers
 
             // 2. Get list categories
             var categories = await _mediator.Send(query);
-            
-            return Ok(categories);
+
+            return categories.MatchFirst(
+                Ok,
+                error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
         }
 
         [HttpPost]
@@ -39,9 +44,11 @@ namespace R2EShop.API.Controllers
                 request.PhotoUrl);
 
             // 2. Create Category
-            await _mediator.Send(command);
+            var createCategory = await _mediator.Send(command);
 
-            return Ok();
+            return createCategory.MatchFirst(
+                createCategory => Ok(createCategory),
+                error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
         }
 
         [HttpPost("{Id}")]
@@ -54,9 +61,11 @@ namespace R2EShop.API.Controllers
                 request.PhotoUrl);
 
             // 2. Update Category
-            await _mediator.Send(command);
+            var updateCategory = await _mediator.Send(command);
 
-            return Ok();
+            return updateCategory.MatchFirst(
+                updateCategory => Ok(updateCategory),
+                error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
         }
     }
 }
