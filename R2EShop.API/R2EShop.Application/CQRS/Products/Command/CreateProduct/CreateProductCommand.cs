@@ -15,5 +15,5 @@ namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
         double ProductPrice,
         string PhotoUrl,
         IList<Guid>? Categories
-    ) : IRequest;
+    ) : IRequest<Unit>;
 }

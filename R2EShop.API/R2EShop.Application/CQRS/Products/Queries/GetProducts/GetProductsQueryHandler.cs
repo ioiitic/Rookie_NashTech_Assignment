@@ -17,11 +17,11 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
 {
     public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IList<Product>>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetProductsQueryHandler(IProductRepository productRepository)
+        public GetProductsQueryHandler(IUnitOfWork unitOfWork)
         {
-            _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IList<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
@@ -53,7 +53,7 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
             }
 
             // 5. Get products
-            var products = await _productRepository.FindAsync(spec);
+            var products = await _unitOfWork.Products.FindAsync(spec);
 
             return products.ToList();
         }
