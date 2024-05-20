@@ -27,7 +27,7 @@ namespace R2EShop.Infrastructure.Common
 
         public async Task<TEntity?> FindFirstOrDefaultAsync(ISpecification<TEntity> spec)
         {
-            IQueryable<TEntity> query = _dbSet.AsQueryable().AsExpandable();
+            IQueryable<TEntity> query = _dbSet.AsQueryable();
 
             if (spec != null)
             {
@@ -80,7 +80,10 @@ namespace R2EShop.Infrastructure.Common
 
         public async Task AddAsync(TEntity entity) => await _dbSet.AddAsync(entity);
 
-        public void Update(TEntity entity) => _dbSet.Update(entity);
+        public void Update(TEntity existingEntity, TEntity updatedEntity)
+        {
+            _dbSet.Entry(existingEntity).CurrentValues.SetValues(updatedEntity);
+        }
 
         public void Delete(TEntity entity)
         {

@@ -2,8 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.Application.CQRS.Authentication.Command.Register;
+using R2EShop.Application.CQRS.Products.Command.CreateProduct;
 using R2EShop.Application.CQRS.Products.Queries.GetProducts;
+using R2EShop.Contracts.Product;
 using R2EShop.Domain.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace R2EShop.API.Controllers
 {
@@ -27,21 +30,29 @@ namespace R2EShop.API.Controllers
             [FromQuery] int? maxPrice,
             [FromQuery] string[] categoryIds)
         {
-            var command = new GetProductsQuery(page, pageSize, search, minPrice, maxPrice, categoryIds);
+            // 1. Set up query
+            var query = new GetProductsQuery(page, pageSize, search, minPrice, maxPrice, categoryIds);
 
-            var products = await _mediator.Send(command);
+            // 2. Get list products
+            var products = await _mediator.Send(query);
 
             return Ok(products);
         }
 
         [HttpPost]
-        public IActionResult Create()
+        public async Task<IActionResult> Create([FromBody] CreateProductRequest request)
         {
-            //Product product = new Product();
-            //product.Name = "123";
-            //product.Category = null;
-            //_context.Products.Add(product);
-            //_context.SaveChanges();
+            // 1. Set up command
+            var command = new CreateProductCommand(
+                request.ProductName,
+                request.Description,
+                request.ProductPrice,
+                request.PhotoUrl,
+                request.Categories);
+
+            // 2. Create product
+            await _mediator.Send(command);
+
             return Ok();
         }
     }

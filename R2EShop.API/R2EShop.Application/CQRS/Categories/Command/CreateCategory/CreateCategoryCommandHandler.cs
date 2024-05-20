@@ -30,6 +30,7 @@ namespace R2EShop.Application.CQRS.Categories.Command.CreateCategory
 
             // 2. Create category
             await _unitOfWork.Categories.AddAsync(newCategory);
+            await _unitOfWork.SaveChangesAsync();
 
             return Unit.Value;
         }
