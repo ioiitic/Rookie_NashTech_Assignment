@@ -15,19 +15,23 @@ namespace R2EShop.Infrastructure.Common
         private readonly MyDbContext _dbContext;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public UnitOfWork(
             MyDbContext dbContext,
             IUserRepository userRepository,
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            ICategoryRepository categoryRepository)
         {
             _dbContext = dbContext;
             _userRepository = userRepository;
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public IUserRepository Users => _userRepository;
         public IProductRepository Products => _productRepository;
+        public ICategoryRepository Categories => _categoryRepository;
 
         public void Dispose()
         {

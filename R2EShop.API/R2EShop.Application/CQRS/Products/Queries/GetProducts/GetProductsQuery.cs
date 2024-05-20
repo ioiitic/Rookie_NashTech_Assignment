@@ -11,7 +11,7 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
     public record GetProductsQuery(
         int? page,
         int? pageSize,
-        string search,
+        string? search,
         int? minPrice,
         int? maxPrice,
         string[] categoryIds) : IRequest<IList<Product>>;

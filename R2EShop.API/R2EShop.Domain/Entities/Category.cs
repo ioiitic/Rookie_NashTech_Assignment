@@ -9,8 +9,8 @@ namespace R2EShop.Domain.Entities
 {
     public class Category : Entity
     {
-        public string? CategoryName { get; set; }
-        public string? PhotoUrl { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
+        public string PhotoUrl { get; set; } = string.Empty;
         public virtual ICollection<Product>? Products { get; set; }
     }
 }

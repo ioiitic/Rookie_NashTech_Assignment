@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequest<CreateProductCommand>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Unit>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductCommandHandler(IProductRepository productRepository)
+        public CreateProductCommandHandler(IUnitOfWork unitOfWork)
         {
-            _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             // 1. Check categories list
 
@@ -37,7 +37,10 @@ namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
             };
 
             // 4. Add Product
-            await _productRepository.AddAsync(newProduct);
+            await _unitOfWork.Products.AddAsync(newProduct);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Unit.Value;
         }
     }
 }
