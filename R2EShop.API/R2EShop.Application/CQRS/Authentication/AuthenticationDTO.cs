@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Application.Authentication
+namespace R2EShop.Application.CQRS.Authentication
 {
     public class AuthenticationDTO
     {

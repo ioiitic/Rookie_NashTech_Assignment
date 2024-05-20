@@ -8,8 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Products\Common\" />
-    <Folder Include="Products\Queries\" />
+    <Folder Include="CQRS\Products\Common\" />
   </ItemGroup>
 
   <ItemGroup>

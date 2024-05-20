@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static R2EShop.Application.Authentication.AuthenticationDTO;
+using static R2EShop.Application.CQRS.Authentication.AuthenticationDTO;
 
-namespace R2EShop.Application.Authentication.Queries
+namespace R2EShop.Application.CQRS.Authentication.Queries.Login
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResult>
     {

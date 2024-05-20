@@ -11,6 +11,7 @@ namespace R2EShop.Application.Interface.Common
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository Users { get; }
+        IProductRepository Products { get; }
         Task SaveChangesAsync();
     }
 }
