@@ -46,11 +46,10 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
             }
 
             // 4. Check for category array
-            //if (request.categoryIds.Count() > 0)
-            //{
-            //    spec.AddFilter(prod)
-            //    request.categoryIds.All(catId => spec.AddFilter( => p.Categories.));
-            //}
+            if (request.categoryIds.Count() > 0)
+            {
+                spec.AddFilter(p => p.Categories.Any(c => request.categoryIds.Contains(c.Id.ToString())));
+            }
 
             // 5. Get products
             var products = await _productRepository.FindAsync(spec);

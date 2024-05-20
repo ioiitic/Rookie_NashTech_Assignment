@@ -59,6 +59,23 @@ namespace R2EShop.Infrastructure.Common
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<TEntity>> FindFromSqlAsync(ISpecification<TEntity> spec, string sql)
+        {
+            IQueryable<TEntity> query = _dbSet.AsQueryable();
+
+            if (spec != null)
+            {
+                query = query.Where(spec.ToExpression());
+
+                foreach (var include in spec.Includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return await query.ToListAsync();
+        }
+
         public async Task<TEntity?> GetByIdAsync(object id) => await _dbSet.FindAsync(id);
 
         public async Task AddAsync(TEntity entity) => await _dbSet.AddAsync(entity);
