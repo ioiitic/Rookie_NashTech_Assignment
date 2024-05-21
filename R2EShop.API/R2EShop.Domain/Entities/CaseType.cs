@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Domain.Entities
 {
-    public class Category : Entity
+    public class CaseType : Entity
     {
-        public string CategoryName { get; set; } = string.Empty;
+        public string CaseTypeName { get; set; } = string.Empty;
+        public int Protection { get; set; } = 0;
+        public int Weight { get; set; } = 0;
         public DateTime CreatedAt { get; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
-        public Guid ParentCategory { get; set; }
-        public virtual ICollection<PhoneCase>? Products { get; set; }
+        public virtual ICollection<Rating>? Ratings { get; set; }
+        public virtual ICollection<PhoneCase>? PhoneCases { get; set; }
     }
 }

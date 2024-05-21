@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Domain.Entities
 {
-    public class OrderItem : Entity
+    public class Image : Entity
     {
-        public float ItemPrice { get; set; }
-        public virtual Order? Order { get; set; }
-        public virtual PhoneCase? Product { get; set; }
+        public string Url { get; set; } = string.Empty;
+        public Guid PhoneCaseId { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Infrastructure.Repositories
 {
-    public class ProductRepository : GenericRepository<Product>, IProductRepository
+    public class ProductRepository : GenericRepository<PhoneCase>, IProductRepository
     {
         public ProductRepository(MyDbContext context) : base(context)
         {

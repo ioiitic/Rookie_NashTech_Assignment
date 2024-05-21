@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Domain.Entities
 {
-    public class Category : Entity
+    public class Device : Entity
     {
-        public string CategoryName { get; set; } = string.Empty;
+        public string DeviceName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
-        public Guid ParentCategory { get; set; }
-        public virtual ICollection<PhoneCase>? Products { get; set; }
+        public Device? ParentDevice { get; set; }
     }
 }
