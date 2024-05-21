@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - R2EShop.App</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/R2EShop.App.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="bg-gray-800 py-4">
+            <div class="max-w-7xl mx-auto px-4 flex justify-content-between items-center">
+                <!-- Logo or Brand -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-white text-lg font-bold">YourLogo</a>
+                </div>
+
+                <!-- Flyout Menu Container -->
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <!-- Trigger -->
+                        <button id="flyoutBtn" type="button" class="text-gray-300 hover:text-white focus:outline-none focus:text-white focus:bg-gray-700 inline-flex items-center">
+                            <span>Products</span>
+                            <svg class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </button>
+                        <!-- Flyout Menu -->
+                        <div id="flyoutMenu" class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-56 origin-top bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-10 hidden">
+                            <div class="py-1">
+                                <!-- Product Items -->
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Product 1</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Product 2</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Product 3</a>
+                                <!-- Add more product items as needed -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Bar or Other Content -->
+                <div class="flex-shrink-0">
+                    <input type="text" placeholder="Search..." class="px-4 py-2 bg-white text-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - R2EShop.App - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.getElementById('flyoutBtn').addEventListener('click', function () {
+            var flyoutMenu = document.getElementById('flyoutMenu');
+            flyoutMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
