@@ -12,7 +12,7 @@ namespace R2EShop.Domain.Entities
         public string CaseColorName { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         public DateTime CreatedAt { get; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
     }
 }

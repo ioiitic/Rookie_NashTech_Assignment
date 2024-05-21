@@ -39,7 +39,6 @@ namespace R2EShop.Application.CQRS.Categories.Command.UpdateCategory
 
             // 4. Update category
             updateCategory.CategoryName = request.CategoryName;
-            updateCategory.PhotoUrl = request.PhotoUrl;
             await _unitOfWork.SaveChangesAsync();
 
             return Unit.Value;

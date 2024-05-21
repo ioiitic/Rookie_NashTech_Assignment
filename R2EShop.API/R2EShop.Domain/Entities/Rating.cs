@@ -15,7 +15,7 @@ namespace R2EShop.Domain.Entities
         public string? Comment { get; set; }
         public bool OrderVerified { get; set; }
         public DateTime CreatedAt { get; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public User? User { get; set; }
         public CaseType? CaseType { get; set; }

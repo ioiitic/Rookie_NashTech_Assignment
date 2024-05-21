@@ -13,7 +13,7 @@ namespace R2EShop.Domain.Entities
         public int Protection { get; set; } = 0;
         public int Weight { get; set; } = 0;
         public DateTime CreatedAt { get; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Rating>? Ratings { get; set; }
         public virtual ICollection<PhoneCase>? PhoneCases { get; set; }

@@ -16,7 +16,7 @@ namespace R2EShop.Domain.Entities
         public double PhoneCasePrice { get; set; } = 0;
         public int NumberOfBuyers { get; set; } = 0;
         public DateTime CreatedAt { get; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Image> Images { get; set; } = new List<Image>();
         public virtual Device? Device { get; set; }
