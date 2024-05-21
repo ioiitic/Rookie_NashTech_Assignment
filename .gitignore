@@ -23,6 +23,7 @@
 *.DS_Store
 
 # Build results
+node_modules/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
