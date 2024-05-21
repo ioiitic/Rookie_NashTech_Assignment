@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="CQRS\Products\Common\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

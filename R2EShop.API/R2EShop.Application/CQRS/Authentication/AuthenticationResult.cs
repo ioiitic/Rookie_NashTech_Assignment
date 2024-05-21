@@ -7,8 +7,5 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Authentication
 {
-    public class AuthenticationDTO
-    {
-        public record AuthenticationResult(User user, string token);
-    }
+    public record AuthenticationResult(User user, string token);
 }

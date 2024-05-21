@@ -1,7 +1,11 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
+using R2EShop.Domain.Errors;
+using R2EShop.Domain.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +14,40 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Unit>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ErrorOr<Unit>>
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork)
+        public CreateProductCommandHandler(IServiceProvider serviceProvider, IUnitOfWork unitOfWork)
         {
+            _serviceProvider = serviceProvider;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Unit>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            // 1. Check categories list
+            IList<Category> listCategories = new List<Category>();  
+            // 1. Handle list categories is not null
+            if (request.Categories.Count() > 0)
+            {
+                // 1.1. Create list categories
+                foreach(Guid catId  in request.Categories)
+                {
+                    var spec = new Specification<Category>();
+                    spec.AddFilter(c => c.Id == catId);
 
-            // 2. Get list categories
-            var listCategories = new List<Category>();
+                    var category = await _unitOfWork.Categories.FindFirstOrDefaultAsync(spec);
+                    if (category is null)
+                    {
+                        return ProductError.NotExist;
+                    }
 
-            // 3. Create new product
+                    listCategories.Add(category);
+                }
+            }
+
+            // 2. Create new product
             Product newProduct = new Product
             {
                 ProductName = request.ProductName,
@@ -36,7 +57,7 @@ namespace R2EShop.Application.CQRS.Products.Command.CreateProduct
                 Categories = listCategories,
             };
 
-            // 4. Add Product
+            // 3. Add Product
             await _unitOfWork.Products.AddAsync(newProduct);
             await _unitOfWork.SaveChangesAsync();
 

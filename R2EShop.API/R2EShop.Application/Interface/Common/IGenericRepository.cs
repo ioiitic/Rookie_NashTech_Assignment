@@ -17,7 +17,7 @@ namespace R2EShop.Application.Interface.Common
         Task<IEnumerable<TEntity>> FindFromSqlAsync(ISpecification<TEntity> spec, string sql);
         Task<TEntity?> GetByIdAsync(object id);
         Task AddAsync(TEntity entity);
-        void Update(TEntity entity);
+        void Update(TEntity existingEntity, TEntity updatedEntity);
         void Delete(TEntity entity);
     }
 }

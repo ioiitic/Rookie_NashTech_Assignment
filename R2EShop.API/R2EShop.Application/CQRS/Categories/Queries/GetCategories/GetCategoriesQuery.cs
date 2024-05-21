@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using R2EShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Categories.Queries.GetCategories
 {
-    public record GetCategoriesQuery() : IRequest<IList<Category>>;
+    public record GetCategoriesQuery() : IRequest<ErrorOr<IList<Category>>>;
 }
