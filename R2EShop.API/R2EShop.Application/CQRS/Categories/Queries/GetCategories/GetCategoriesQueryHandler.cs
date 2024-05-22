@@ -8,7 +8,8 @@ using R2EShop.Domain.Entities;
 
 namespace R2EShop.Application.CQRS.Categories.Queries.GetCategories
 {
-    public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, ErrorOr<IList<Category>>>
+    public class GetCategoriesQueryHandler 
+        : IRequestHandler<GetCategoriesQuery, ErrorOr<IList<Category>>>
     {
         private readonly IUnitOfWork _unitOfWork;
 

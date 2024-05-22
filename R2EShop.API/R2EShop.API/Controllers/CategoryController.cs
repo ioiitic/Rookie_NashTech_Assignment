@@ -32,7 +32,7 @@ namespace R2EShop.API.Controllers
 
             return categories.MatchFirst(
                 Ok,
-                error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
+                error => Problem(title: error.Description));
         }
 
         [HttpPost]

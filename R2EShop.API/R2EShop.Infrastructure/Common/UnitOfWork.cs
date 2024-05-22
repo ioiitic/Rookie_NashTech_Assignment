@@ -17,17 +17,20 @@ namespace R2EShop.Infrastructure.Common
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IDeviceRepository _deviceRepository;
 
         public UnitOfWork(MyDbContext dbContext)
         {
             _dbContext = dbContext;
             _userRepository = new UserRepository(_dbContext);
             _categoryRepository = new CategoryRepository(_dbContext);
+            _deviceRepository = new DeviceRepository(_dbContext);
         }
 
         public IUserRepository Users => _userRepository;
         public IProductRepository Products => _productRepository;
         public ICategoryRepository Categories => _categoryRepository;
+        public IDeviceRepository Devices => _deviceRepository;
 
         public void Dispose()
         {
