@@ -2,6 +2,7 @@
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
 using R2EShop.Infrastructure.Data;
+using R2EShop.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,11 @@ namespace R2EShop.Infrastructure.Common
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public UnitOfWork(
-            MyDbContext dbContext,
-            IUserRepository userRepository,
-            IProductRepository productRepository,
-            ICategoryRepository categoryRepository)
+        public UnitOfWork(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _userRepository = userRepository;
-            _productRepository = productRepository;
-            _categoryRepository = categoryRepository;
+            _userRepository = new UserRepository(_dbContext);
+            _categoryRepository = new CategoryRepository(_dbContext);
         }
 
         public IUserRepository Users => _userRepository;

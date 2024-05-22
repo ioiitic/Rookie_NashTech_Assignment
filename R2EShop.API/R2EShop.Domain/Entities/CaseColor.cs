@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Domain.Entities
 {
-    public class Category : Entity
+    public class CaseColor : Entity
     {
-        public string CategoryName { get; set; } = string.Empty;
+        public string CaseColorName { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public DateTime CreatedAt { get; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
-        public Guid ParentCategory { get; set; }
-        public virtual ICollection<PhoneCase>? Products { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using R2EShop.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using R2EShop.Infrastructure.Data;
 namespace R2EShop.Infrastructure.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240521043915_Change_Req")]
+    partial class Change_Req
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +57,7 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -78,7 +81,7 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<int>("Protection")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Weight")
@@ -99,14 +102,9 @@ namespace R2EShop.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("ParentCategory")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("PhotoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -129,7 +127,7 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<Guid?>("ParentDeviceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -190,14 +188,14 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PhoneCaseId")
+                    b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("PhoneCaseId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderItem");
                 });
@@ -230,7 +228,7 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<double>("PhoneCasePrice")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -265,7 +263,7 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<double>("Score")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("UserId")
@@ -310,7 +308,7 @@ namespace R2EShop.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
@@ -370,13 +368,13 @@ namespace R2EShop.Infrastructure.Migrations
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("R2EShop.Domain.Entities.PhoneCase", "PhoneCase")
+                    b.HasOne("R2EShop.Domain.Entities.PhoneCase", "Product")
                         .WithMany()
-                        .HasForeignKey("PhoneCaseId");
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
 
-                    b.Navigation("PhoneCase");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.PhoneCase", b =>

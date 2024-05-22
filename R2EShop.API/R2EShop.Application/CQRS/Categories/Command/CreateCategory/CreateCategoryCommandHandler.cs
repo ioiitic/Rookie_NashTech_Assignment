@@ -26,7 +26,6 @@ namespace R2EShop.Application.CQRS.Categories.Command.CreateCategory
             Category newCategory = new Category
             {
                 CategoryName = request.CategoryName,
-                PhotoUrl = request.PhotoUrl,
             };
 
             // 2. Create category

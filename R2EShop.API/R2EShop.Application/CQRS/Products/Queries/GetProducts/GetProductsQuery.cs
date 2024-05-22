@@ -15,5 +15,5 @@ namespace R2EShop.Application.CQRS.Products.Queries.GetProducts
         string? search,
         int? minPrice,
         int? maxPrice,
-        string[] categoryIds) : IRequest<ErrorOr<IList<Product>>>;
+        string[] categoryIds) : IRequest<ErrorOr<IList<PhoneCase>>>;
 }

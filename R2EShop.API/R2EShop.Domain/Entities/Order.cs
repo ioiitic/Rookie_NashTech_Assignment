@@ -10,6 +10,7 @@ namespace R2EShop.Domain.Entities
     public class Order : Entity
     {
         public float TotalPrice { get; set; }
+        public DateTime CreatedAt { get; } = DateTime.Now;
         public Guid UserId { get; set; }
         public virtual ICollection<OrderItem>? OrderItems { get; set; }
     }
