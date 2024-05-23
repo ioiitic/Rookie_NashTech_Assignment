@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Domain.Errors
 {
-    public static class CategoryError
+    public static class DeviceError
     {
         public static Error ParentNotExist => Error.NotFound(
-            code: "Category.ParentNotFound",
-            description: "Category parent is not found.");
+            code: "Device.ParentNotFound",
+            description: "Device parent is not found.");
     }
 }

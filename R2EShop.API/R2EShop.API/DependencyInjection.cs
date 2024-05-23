@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Mapster;
+using MapsterMapper;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace R2EShop.API
 {
@@ -6,6 +9,7 @@ namespace R2EShop.API
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
+
             // Add services to the container.
             services.AddControllers()
                  .AddNewtonsoftJson(
@@ -16,6 +20,11 @@ namespace R2EShop.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(Assembly.GetExecutingAssembly());
+
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
             return services;
         }
     }

@@ -14,10 +14,15 @@ namespace R2EShop.Domain.Entities
         public double Score { get; set; }
         public string? Comment { get; set; }
         public bool OrderVerified { get; set; }
-        public DateTime CreatedAt { get; } = DateTime.Now;
+        public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public User? User { get; set; }
         public CaseType? CaseType { get; set; }
+
+        public Rating()
+        {
+            CreatedAt = DateTime.Now;
+        }
     }
 }

@@ -15,13 +15,18 @@ namespace R2EShop.Domain.Entities
         public string PhoneNumber { get; set; } = string.Empty;
         public string Gender { get; set; } = string.Empty;
         public DateTime Birthday { get; set; }
-        public Address? Address { get; set; }
+        public Address Address { get; set; }
         public string? ImageUrl { get; set; }
         public DateTime LastLogin { get; set; }
-        public DateTime CreatedAt { get; } = DateTime.Now;
+        public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
         public virtual ICollection<Rating>? Ratings { get; set; }
+
+        public User()
+        {
+            CreatedAt = DateTime.Now;
+        }
     }
 }

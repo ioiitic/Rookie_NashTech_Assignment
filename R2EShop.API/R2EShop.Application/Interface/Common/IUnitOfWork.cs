@@ -13,6 +13,7 @@ namespace R2EShop.Application.Interface.Common
         IUserRepository Users { get; }
         IProductRepository Products { get; }
         ICategoryRepository Categories { get; }
+        IDeviceRepository Devices { get; }
         Task SaveChangesAsync();
     }
 }

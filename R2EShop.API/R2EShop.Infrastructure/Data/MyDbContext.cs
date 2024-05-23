@@ -39,8 +39,28 @@ namespace R2EShop.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .OwnsOne(u => u.Address);
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.OwnsOne(u => u.Address, address =>
+                {
+                    address.Property(a => a.Street)
+                        .HasColumnName("AddressStreet");
+                    address.Property(a => a.City)
+                        .HasColumnName("AddressCity");
+                    address.Property(a => a.State)
+                        .HasColumnName("AddressState");
+                });
+            });
+
+            modelBuilder.Entity<Device>()
+                .HasMany(d => d.Devices)
+                .WithOne()
+                .HasForeignKey(d => d.ParentDeviceId);
+
+            modelBuilder.Entity<Category>()
+                .HasMany(d => d.Categories)
+                .WithOne()
+                .HasForeignKey(d => d.ParentCategoryId);
         }
     }
 }
