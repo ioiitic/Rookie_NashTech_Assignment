@@ -41,6 +41,16 @@ namespace R2EShop.Infrastructure.Data
         {
             modelBuilder.Entity<User>()
                 .OwnsOne(u => u.Address);
+
+            modelBuilder.Entity<Device>()
+                .HasMany(d => d.Devices)
+                .WithOne()
+                .HasForeignKey(d => d.ParentDeviceId);
+
+            modelBuilder.Entity<Category>()
+                .HasMany(d => d.Categories)
+                .WithOne()
+                .HasForeignKey(d => d.ParentCategoryId);
         }
     }
 }

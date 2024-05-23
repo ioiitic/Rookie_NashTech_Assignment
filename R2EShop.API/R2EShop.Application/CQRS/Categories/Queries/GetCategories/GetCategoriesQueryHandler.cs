@@ -1,6 +1,4 @@
-﻿
-
-using ErrorOr;
+﻿using ErrorOr;
 using MediatR;
 using R2EShop.Application.Interface.Common;
 using R2EShop.Application.Interface.Repositories;

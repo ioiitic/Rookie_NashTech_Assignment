@@ -41,7 +41,7 @@ namespace R2EShop.Application.CQRS.Devices.Command.CreateDevice
             var newDevice = new Device
             {
                 DeviceName = request.DeviceName,
-                ParentDevice = parentDevice,
+                ParentDeviceId = parentDevice?.Id,
                 IsActive = true
             };
             await _unitOfWork.Devices.AddAsync(newDevice);

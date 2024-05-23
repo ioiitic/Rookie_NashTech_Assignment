@@ -13,7 +13,7 @@ namespace R2EShop.Domain.Entities
         public DateTime CreatedAt { get; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
-        public Device? ParentDevice { get; set; }
-        public virtual ICollection<Device>? Devices { get; set; } = new List<Device>();
+        public Guid? ParentDeviceId { get; set; }
+        public virtual ICollection<Device>? Devices { get; set; }
     }
 }

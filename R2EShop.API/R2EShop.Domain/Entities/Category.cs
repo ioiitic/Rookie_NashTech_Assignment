@@ -13,7 +13,8 @@ namespace R2EShop.Domain.Entities
         public DateTime CreatedAt { get; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
-        public Guid ParentCategory { get; set; }
+        public Guid? ParentCategoryId { get; set; }
+        public virtual ICollection<Category>? Categories { get; set; }
         public virtual ICollection<PhoneCase>? Products { get; set; }
     }
 }

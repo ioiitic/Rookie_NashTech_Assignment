@@ -25,7 +25,7 @@ namespace R2EShop.Application.CQRS.Devices.Query.GetDevices
         {
             // 1. Set up query
             var spec = new Specification<Device>();
-            spec.AddFilter(dev => dev.ParentDevice == null);
+            spec.AddFilter(dev => dev.ParentDeviceId == null);
             spec.Include(dev => dev.Devices);
 
             // 2. Get devices

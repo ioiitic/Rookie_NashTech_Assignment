@@ -9,7 +9,9 @@ namespace R2EShop.API.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Device, GetDeviceResponse>();
+            config.NewConfig<Device, GetDeviceResponse>()
+                .Map(desc => desc.ChildDevices,
+                    src => src.Devices == null ? null : src.Devices.Select(dev => new { dev.Id, dev.DeviceName }).ToList());
             config.NewConfig<CreateDeviceRequest, CreateDeviceCommand>();
         }
     }

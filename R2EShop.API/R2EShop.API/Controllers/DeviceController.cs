@@ -3,6 +3,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using R2EShop.API.Utils;
 using R2EShop.Application.CQRS.Devices.Command.CreateDevice;
 using R2EShop.Application.CQRS.Devices.Query.GetDevices;
 using R2EShop.Contracts.DeviceContract;
@@ -23,7 +24,10 @@ namespace R2EShop.API.Controllers
             _mapper = mapper;
         }
 
-        // GET Method to get all device as tree
+        /// <summary>
+        ///     GET Method to get device as tree
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -34,11 +38,11 @@ namespace R2EShop.API.Controllers
             ErrorOr<IList<Device>> devices = await _mediator.Send(query);
 
             return devices.Match(
-                devices => Ok(ListMapping(devices)),
+                devices => Ok(MappingUtils.MapList<GetDeviceResponse, Device>(devices, _mapper)),
                 Problem);
         }
 
-        //POST method to create a device
+        // POST method to create a device
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDeviceRequest request)
         {
@@ -51,11 +55,6 @@ namespace R2EShop.API.Controllers
             return result.Match(
                 res => Ok(),
                 Problem);
-        }
-
-        private IList<GetDeviceResponse> ListMapping(IList<Device> devices)
-        {
-            return devices.Select(dev => _mapper.Map<GetDeviceResponse>(dev)).ToList();
         }
     }
 }

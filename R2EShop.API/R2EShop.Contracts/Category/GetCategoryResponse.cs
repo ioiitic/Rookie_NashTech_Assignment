@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Contracts.Category
 {
-    public record CategoryRequest(
+    public record GetCategoryResponse(
+        Guid Id,
         string CategoryName,
-        string? ParentCategoryId);
+        IList<GetCategoryResponse> ChildCategories);
 }
