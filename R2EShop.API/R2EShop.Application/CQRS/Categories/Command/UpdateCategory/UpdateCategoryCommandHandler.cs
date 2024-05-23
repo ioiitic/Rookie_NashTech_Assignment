@@ -34,7 +34,7 @@ namespace R2EShop.Application.CQRS.Categories.Command.UpdateCategory
             // 3. Check category is null
             if (updateCategory is null)
             {
-                return CategoryError.NotExist;
+                return CategoryError.ParentNotExist;
             }
 
             // 4. Update category

@@ -11,5 +11,5 @@ namespace R2EShop.Application.CQRS.Categories.Command.CreateCategory
 {
     public record CreateCategoryCommand(
         string CategoryName,
-        string PhotoUrl) : IRequest<ErrorOr<Unit>>;
+        string ParentCategoryId) : IRequest<ErrorOr<Unit>>;
 }

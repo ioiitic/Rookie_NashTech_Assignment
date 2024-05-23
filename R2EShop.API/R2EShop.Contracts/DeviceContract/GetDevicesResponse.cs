@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Contracts.DeviceContract
 {
-    public record GetDeviceResponse(
+    public record GetDevicesResponse(
         Guid Id,
         string DeviceName,
-        IList<GetDeviceResponse> ChildDevices);
+        IList<GetDevicesResponse> ChildDevices);
 }

@@ -9,8 +9,8 @@ namespace R2EShop.Domain.Errors
 {
     public static class CategoryError
     {
-        public static Error NotExist => Error.NotFound(
-            code: "Category.NotFound",
-            description: "Category is not found.");
+        public static Error ParentNotExist => Error.NotFound(
+            code: "Category.ParentNotFound",
+            description: "Category parent is not found.");
     }
 }

@@ -9,8 +9,8 @@ namespace R2EShop.Domain.Errors
 {
     public static class DeviceError
     {
-        public static Error NotExist => Error.NotFound(
-            code: "Device.NotFound",
+        public static Error ParentNotExist => Error.NotFound(
+            code: "Device.ParentNotFound",
             description: "Device parent is not found.");
     }
 }

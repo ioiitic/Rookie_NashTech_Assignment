@@ -24,10 +24,8 @@ namespace R2EShop.API.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        ///     GET Method to get device as tree
-        /// </summary>
-        /// <returns></returns>
+        //SUMMARY: GET method to get all devices
+        //TODO: Validation request
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -38,11 +36,12 @@ namespace R2EShop.API.Controllers
             ErrorOr<IList<Device>> devices = await _mediator.Send(query);
 
             return devices.Match(
-                devices => Ok(MappingUtils.MapList<GetDeviceResponse, Device>(devices, _mapper)),
+                devices => Ok(MappingUtils.MapList<GetDevicesResponse, Device>(devices, _mapper)),
                 Problem);
         }
 
-        // POST method to create a device
+        //SUMMARY: POST method to create a device
+        //TODO: Validation request
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDeviceRequest request)
         {
@@ -56,5 +55,11 @@ namespace R2EShop.API.Controllers
                 res => Ok(),
                 Problem);
         }
+
+        //SUMMARY: PUT method to update a device
+        //TODO: All
+
+        //SUMMARY: DELETE method to delete a device
+        //TODO: All
     }
 }

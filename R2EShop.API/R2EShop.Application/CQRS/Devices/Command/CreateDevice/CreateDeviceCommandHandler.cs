@@ -33,7 +33,7 @@ namespace R2EShop.Application.CQRS.Devices.Command.CreateDevice
                 parentDevice = await _unitOfWork.Devices.FindFirstOrDefaultAsync(spec);
                 if (parentDevice is null)
                 {
-                    return DeviceError.NotExist;
+                    return DeviceError.ParentNotExist;
                 }
             }
 

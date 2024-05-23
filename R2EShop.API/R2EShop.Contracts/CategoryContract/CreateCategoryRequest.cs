@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Contracts.Category
+namespace R2EShop.Contracts.CategoryContract
 {
-    public record GetCategoryResponse(
-        Guid Id,
+    public record CreateCategoryRequest(
         string CategoryName,
-        IList<GetCategoryResponse> ChildCategories);
+        string? ParentCategoryId);
 }

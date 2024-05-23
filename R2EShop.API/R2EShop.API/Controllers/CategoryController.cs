@@ -6,7 +6,7 @@ using R2EShop.API.Utils;
 using R2EShop.Application.CQRS.Categories.Command.CreateCategory;
 using R2EShop.Application.CQRS.Categories.Command.UpdateCategory;
 using R2EShop.Application.CQRS.Categories.Queries.GetCategories;
-using R2EShop.Contracts.Category;
+using R2EShop.Contracts.CategoryContract;
 using R2EShop.Domain.Entities;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -25,10 +25,8 @@ namespace R2EShop.API.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        ///     GET Method get all categories as tree
-        /// </summary>
-        /// <returns></returns>
+        //SUMMARY: GET method to get all categories
+        //TODO: Validation request
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -39,29 +37,28 @@ namespace R2EShop.API.Controllers
             ErrorOr<IList<Category>> categories = await _mediator.Send(query);
 
             return categories.Match(
-                categories => Ok(MappingUtils.MapList<GetCategoryResponse, Category>(categories, _mapper)),
-                errors => Problem(errors));
+                categories => Ok(MappingUtils.MapList<GetCategoriesResponse, Category>(categories, _mapper)),
+                Problem);
         }
 
-        /// <summary>
-        ///     POST Method to create category
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        //SUMMARY: POST method to create a category
+        //TODO: Validation request
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CategoryRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateCategoryRequest request)
         {
             // 1. Set up command
             var command = _mapper.Map<CreateCategoryCommand>(request);
 
             // 2. Create Category
-            ErrorOr<Unit> createCategory = await _mediator.Send(command);
+            ErrorOr<Unit> result = await _mediator.Send(command);
 
-            return createCategory.Match(
+            return result.Match(
                 createCategory => Ok(),
                 Problem);
         }
 
+        //SUMMARY: PUT method to update a category
+        //TODO: Refactor code
         //[HttpPost("{Id}")]
         //public async Task<IActionResult> Update([FromRoute] string Id, [FromBody] CategoryRequest request)
         //{
@@ -78,5 +75,8 @@ namespace R2EShop.API.Controllers
         //        updateCategory => Ok(updateCategory),
         //        error => Problem(statusCode: StatusCodes.Status409Conflict, title: error.Description));
         //}
+
+        //SUMMARY: DELETE method to delete a device
+        //TODO: All
     }
 }
