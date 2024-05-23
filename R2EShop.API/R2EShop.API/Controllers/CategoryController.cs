@@ -53,7 +53,7 @@ namespace R2EShop.API.Controllers
             ErrorOr<Unit> result = await _mediator.Send(command);
 
             return result.Match(
-                createCategory => Ok(),
+                result => Ok(),
                 Problem);
         }
 

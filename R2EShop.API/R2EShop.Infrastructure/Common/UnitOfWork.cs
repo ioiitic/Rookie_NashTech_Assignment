@@ -18,6 +18,7 @@ namespace R2EShop.Infrastructure.Common
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IDeviceRepository _deviceRepository;
+        private readonly ICaseColorRepository _caseColorRepository;
 
         public UnitOfWork(MyDbContext dbContext)
         {
@@ -25,12 +26,14 @@ namespace R2EShop.Infrastructure.Common
             _userRepository = new UserRepository(_dbContext);
             _categoryRepository = new CategoryRepository(_dbContext);
             _deviceRepository = new DeviceRepository(_dbContext);
+            _caseColorRepository = new CaseColorRepository(_dbContext);
         }
 
         public IUserRepository Users => _userRepository;
         public IProductRepository Products => _productRepository;
         public ICategoryRepository Categories => _categoryRepository;
         public IDeviceRepository Devices => _deviceRepository;
+        public ICaseColorRepository CaseColors => _caseColorRepository;
 
         public void Dispose()
         {

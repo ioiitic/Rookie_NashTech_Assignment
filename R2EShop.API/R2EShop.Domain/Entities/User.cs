@@ -19,7 +19,7 @@ namespace R2EShop.Domain.Entities
         public string? ImageUrl { get; set; }
         public DateTime LastLogin { get; set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Order>? Orders { get; set; }
         public virtual ICollection<Rating>? Ratings { get; set; }
@@ -27,6 +27,7 @@ namespace R2EShop.Domain.Entities
         public User()
         {
             CreatedAt = DateTime.Now;
+            Address = new Address("", "", "");
         }
     }
 }

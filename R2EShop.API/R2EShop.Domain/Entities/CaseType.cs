@@ -14,7 +14,7 @@ namespace R2EShop.Domain.Entities
         public int Weight { get; set; } = 0;
         public double AverageStar { get; set; }
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Rating>? Ratings { get; set; }
         public virtual ICollection<PhoneCase>? PhoneCases { get; set; }
