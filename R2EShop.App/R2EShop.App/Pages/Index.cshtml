@@ -4,14 +4,100 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="control-carousel" class="relative w-full" data-carousel="static">
+    <div class="relative text-slate-800">
+        <div id="carousel-item-1" class="">
+            <div class="relative">
+                <img src="https://cdn-stamplib.casetify.com/cms/image/39e80c24fe0cec8d7a3ce4e139fd36f7.jpg.webp"
+                        class="w-full" alt="Image1" />                    
+                <button class="prev absolute top-1/2 left-0 transform -translate-x-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <button class="next absolute top-1/2 right-0 transform translate-x-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
+            </div>
+            <div class="b-0 text-center my-6">
+                <h1 class="font-extrabold text-5xl font-sans m-6">A TO Z. We’ve got you covered</h1>
+                <h1 class="mb-lg-0">iPhone 15 Cases Available</h1>
+            </div>
+        </div>
+        <div id="carousel-item-2" class="hidden">
+            <div class="relative">
+                <video autoplay="autoplay" loop="loop" playsinline="playsinline" muted="muted">
+                    <source src="https://cdn-stamplib.casetify.com/cms/video/13414f70236c6c70d107cdc4d5dd0b20.mp4" />
+                </video>
+                <button class="prev absolute top-1/2 left-0 transform -translate-x-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <button class="next absolute top-1/2 right-0 transform translate-x-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
+                </button>
+            </div>
+            <div class="text-center my-6">
+                <h1 class="font-extrabold text-5xl font-sans m-6">A TO Z. We’ve got you covered</h1>
+                <h1 class="mb-lg-0">iPhone 15 Cases Available</h1>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="relative grid grid-cols-5">
+    <button class="prev absolute top-1/2 left-0 transform -translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
+    </button>
+    <a>
+        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+    </a>
+    <a>
+        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+    </a>
+    <a>
+        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+    </a>
+    <a>
+        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+    </a>
+    <a>
+        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+    </a>
+    <button class="next absolute top-1/2 right-0 transform translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
+    </button>
+</div>
+
+<script>
+    const items = [
+        {
+            position: 0,
+            el: document.getElementById('carousel-item-1'),
+        },
+        {
+            position: 1,
+            el: document.getElementById('carousel-item-2'),
+        }
+    ];
+
+    const prevButtons = Array.from(document.getElementsByClassName('prev'));
+    const nextButtons = Array.from(document.getElementsByClassName('next'));
+    console.log(prevButtons);
+    console.log(nextButtons);
+
+    let currentIndex = 1;
+
+    prevButtons.forEach(prevButton => {
+        prevButton.addEventListener('click', () => {
+            items[currentIndex].el.classList.add("hidden");
+            currentIndex = (currentIndex === 0) ? items.length - 1 : currentIndex - 1;
+            items[currentIndex].el.classList.remove("hidden");
+        });
+    });
+
+    nextButtons.forEach(nextButton => {
+        nextButton.addEventListener('click', () => {
+            items[currentIndex].el.classList.add("hidden");
+            currentIndex = (currentIndex === items.length - 1) ? 0 : currentIndex + 1;
+            items[currentIndex].el.classList.remove("hidden");
+        });
+    });
+</script>
