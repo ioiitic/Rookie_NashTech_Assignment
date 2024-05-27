@@ -1,13 +1,13 @@
-﻿@page
+﻿    @page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div id="control-carousel" class="relative w-full" data-carousel="static">
+<div id="control-carousel" class="relative w-full">
     <div class="relative text-slate-800">
         <div id="carousel-item-1" class="">
-            <div class="relative">
+            <div class="relative z-0">
                 <img src="https://cdn-stamplib.casetify.com/cms/image/39e80c24fe0cec8d7a3ce4e139fd36f7.jpg.webp"
                         class="w-full" alt="Image1" />                    
                 <button class="prev absolute top-1/2 left-0 transform -translate-x-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
@@ -20,6 +20,7 @@
             <div class="b-0 text-center my-6">
                 <h1 class="font-extrabold text-5xl font-sans m-6">A TO Z. We’ve got you covered</h1>
                 <h1 class="mb-lg-0">iPhone 15 Cases Available</h1>
+                <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2">Shop now</button>
             </div>
         </div>
         <div id="carousel-item-2" class="hidden">
@@ -37,33 +38,121 @@
             <div class="text-center my-6">
                 <h1 class="font-extrabold text-5xl font-sans m-6">A TO Z. We’ve got you covered</h1>
                 <h1 class="mb-lg-0">iPhone 15 Cases Available</h1>
+                <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2">Shop now</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="relative grid grid-cols-5">
+<div class="">
+    <h1 class="font-extrabold text-2xl font-sans m-6">On Sales</h1>
+
+    <div class="relative gap-x-24 border-b-2">
+        <button class="prev absolute top-1/2 left-0 transform -translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <div class="flex grid grid-cols-3 justify-content-between">
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+        </div>
+        <button class="next absolute top-1/2 right-0 transform translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+    </div>
+</div>
+
+<div class="relative gap-x-24">
     <button class="prev absolute top-1/2 left-0 transform -translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
     </button>
-    <a>
-        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
-    </a>
-    <a>
-        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
-    </a>
-    <a>
-        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
-    </a>
-    <a>
-        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
-    </a>
-    <a>
-        <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
-    </a>
+    <div class="flex grid grid-cols-5 justify-content-between divide-x-2 divide-gray-100 border-y-2">
+        <a class="px-12 my-6 py-6">
+            <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+        </a>
+        <a class="px-12 my-6 py-6">
+            <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+        </a>
+        <a class="px-12 my-6 py-6">
+            <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+        </a>
+        <a class="px-12 my-6 py-6">
+            <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+        </a>
+        <a class="px-12 my-6 py-6">
+            <img src="https://cdn-stamplib.casetify.com/cms/image/f1c16fb553e8e59a1ee1f8b584a7303f.png.webp" />
+        </a>
+    </div>
     <button class="next absolute top-1/2 right-0 transform translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
     </button>
+</div>
+
+<div class="">
+    <h1 class="font-extrabold text-2xl font-sans m-6">Devices Collection</h1>
+
+    <div class="relative gap-x-24 border-b-2">
+        <button class="prev absolute top-1/2 left-0 transform -translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <div class="flex grid grid-cols-3 justify-content-between">
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>    
+        </div>
+        <button class="next absolute top-1/2 right-0 transform translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+    </div>
+</div>
+
+<div class="">
+    <h1 class="font-extrabold text-2xl font-sans m-6">Best Seller</h1>
+
+    <div class="relative gap-x-24 border-b-2">
+        <button class="prev absolute top-1/2 left-0 transform -translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <div class="flex grid grid-cols-3 justify-content-between">
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+            <a class="px-12 my-6 py-6">
+                <img src="https://cdn-image02.casetify.com/usr/16571/16546571/~v193/30604411_iphone-15-pro__color_natural-titanium_16006056.png.560x560-w.webp" />
+            </a>
+        </div>
+        <button class="next absolute top-1/2 right-0 transform translate-x-full transform -translate-y-1/2 bg-white bg-opacity-20 p-2 rounded-full shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+    </div>
+</div>
+
+<div class="">
+    <h1 class="font-extrabold text-2xl font-sans m-6">Our Mission</h1>
+
+    <picture>
+        <source srcset="https://cdn-stamplib.casetify.com/cms/image/489e4dfd03592490676e727c133d2a30.gif">
+        <img src="https://cdn-stamplib.casetify.com/cms/image/7c59a5e141aa6371548d13c838acc966.gif" alt="Re/CASETiFY" loading="lazy" class="w-full">
+    </picture>
+    <div class="text-center my-6">
+        <h1 class="font-extrabold text-5xl font-sans m-6">A TO Z. We’ve got you covered</h1>
+        <h1 class="mb-lg-0">iPhone 15 Cases Available</h1>
+    </div>
 </div>
 
 <script>

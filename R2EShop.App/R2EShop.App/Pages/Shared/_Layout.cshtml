@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
 <body class="min-h-screen flex flex-col">
-    <header class="shadow-md">
-        <nav class="container mx-auto bg-white border-gray-200">
-            <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto">
+    <header class="relative ">
+        <nav class="fixed top-0 left-0 right-0 z-40 px-24 mx-auto bg-white border-gray-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between mx-auto">
                 <a href="#" class="flex items-center">
                     <img src="https://cdn.shopify.com/s/files/1/0558/6413/1764/files/Rewrite_Reasons_Why_You_Should_Have_A_Black_White_Logo_Design_1_1024x1024.jpg?v=1700188874" 
                     class="h-20" alt="Flowbite Logo" />
-                    <span class="self-center text-4xl font-semibold whitespace-nowrap">Flowbite</span>
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap">Flowbite</span>
                 </a>
 
                 <div id="mega-menu-full" class="items-center justify-between">
@@ -122,7 +122,7 @@
     </header>
 
     <div class="flex-grow">
-        <main role="main" class="container mx-auto max-w-screen-2xl">
+        <main role="main" class="mt-24 px-16 mx-auto">
             @RenderBody()
         </main>
     </div>
