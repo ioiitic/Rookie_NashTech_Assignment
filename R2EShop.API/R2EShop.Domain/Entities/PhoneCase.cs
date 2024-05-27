@@ -22,6 +22,7 @@ namespace R2EShop.Domain.Entities
         public virtual Device? Device { get; set; }
         public virtual CaseType? CaseType { get; set; }
         public virtual CaseColor? CaseColor { get; set; }
+        public virtual Artwork? Artwork { get; set; }
         public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
         public PhoneCase()

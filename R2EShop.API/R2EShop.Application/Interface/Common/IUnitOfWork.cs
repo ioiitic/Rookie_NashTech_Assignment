@@ -16,6 +16,7 @@ namespace R2EShop.Application.Interface.Common
         IDeviceRepository Devices { get; }
         ICaseColorRepository CaseColors { get; }
         ICaseTypeRepository CaseTypes { get; }
+        IArtworkRepository Artworks { get; }
         Task SaveChangesAsync();
     }
 }
