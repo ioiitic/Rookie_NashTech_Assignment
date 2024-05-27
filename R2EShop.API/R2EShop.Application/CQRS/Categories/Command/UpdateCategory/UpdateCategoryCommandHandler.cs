@@ -34,12 +34,11 @@ namespace R2EShop.Application.CQRS.Categories.Command.UpdateCategory
             // 3. Check category is null
             if (updateCategory is null)
             {
-                return CategoryError.NotExist;
+                return CategoryError.ParentNotExist;
             }
 
             // 4. Update category
             updateCategory.CategoryName = request.CategoryName;
-            updateCategory.PhotoUrl = request.PhotoUrl;
             await _unitOfWork.SaveChangesAsync();
 
             return Unit.Value;

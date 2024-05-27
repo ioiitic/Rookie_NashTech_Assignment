@@ -2,6 +2,7 @@
 using R2EShop.Application.Interface.Repositories;
 using R2EShop.Domain.Entities;
 using R2EShop.Infrastructure.Data;
+using R2EShop.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,22 +17,23 @@ namespace R2EShop.Infrastructure.Common
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IDeviceRepository _deviceRepository;
+        private readonly ICaseColorRepository _caseColorRepository;
 
-        public UnitOfWork(
-            MyDbContext dbContext,
-            IUserRepository userRepository,
-            IProductRepository productRepository,
-            ICategoryRepository categoryRepository)
+        public UnitOfWork(MyDbContext dbContext)
         {
             _dbContext = dbContext;
-            _userRepository = userRepository;
-            _productRepository = productRepository;
-            _categoryRepository = categoryRepository;
+            _userRepository = new UserRepository(_dbContext);
+            _categoryRepository = new CategoryRepository(_dbContext);
+            _deviceRepository = new DeviceRepository(_dbContext);
+            _caseColorRepository = new CaseColorRepository(_dbContext);
         }
 
         public IUserRepository Users => _userRepository;
         public IProductRepository Products => _productRepository;
         public ICategoryRepository Categories => _categoryRepository;
+        public IDeviceRepository Devices => _deviceRepository;
+        public ICaseColorRepository CaseColors => _caseColorRepository;
 
         public void Dispose()
         {

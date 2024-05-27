@@ -22,7 +22,7 @@ namespace R2EShop.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CategoryProduct", b =>
+            modelBuilder.Entity("CategoryPhoneCase", b =>
                 {
                     b.Property<Guid>("CategoriesId")
                         .HasColumnType("uniqueidentifier");
@@ -34,7 +34,68 @@ namespace R2EShop.Infrastructure.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("CategoryProduct");
+                    b.ToTable("CategoryPhoneCase");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.CaseColor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CaseColorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CaseColor");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.CaseType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("AverageStar")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CaseTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Protection")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CaseType");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.Category", b =>
@@ -44,41 +105,75 @@ namespace R2EShop.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("R2EShop.Domain.Entities.Feedback", b =>
+            modelBuilder.Entity("R2EShop.Domain.Entities.Device", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Comment")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeviceName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProductId")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ParentDeviceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Score")
-                        .HasColumnType("real");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ParentDeviceId");
 
-                    b.HasIndex("UserId");
+                    b.ToTable("Device");
+                });
 
-                    b.ToTable("Feedbacks");
+            modelBuilder.Entity("R2EShop.Domain.Entities.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PhoneCaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhoneCaseId");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.Order", b =>
@@ -86,6 +181,9 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("TotalPrice")
                         .HasColumnType("real");
@@ -97,7 +195,7 @@ namespace R2EShop.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.OrderItem", b =>
@@ -109,42 +207,103 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<float>("ItemPrice")
                         .HasColumnType("real");
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid?>("PhoneCaseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("PhoneCaseId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("R2EShop.Domain.Entities.Product", b =>
+            modelBuilder.Entity("R2EShop.Domain.Entities.PhoneCase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
+                    b.Property<Guid?>("CaseColorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CaseTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeviceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NumberOfBuyers")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneCaseName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("ProductPrice")
+                    b.Property<double>("PhoneCasePrice")
                         .HasColumnType("float");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.HasIndex("CaseColorId");
+
+                    b.HasIndex("CaseTypeId");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("PhoneCase");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.Rating", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CaseTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("OrderVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CaseTypeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.User", b =>
@@ -153,24 +312,46 @@ namespace R2EShop.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fullname")
+                    b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastLogin")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhotoUrl")
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("CategoryProduct", b =>
+            modelBuilder.Entity("CategoryPhoneCase", b =>
                 {
                     b.HasOne("R2EShop.Domain.Entities.Category", null)
                         .WithMany()
@@ -178,26 +359,34 @@ namespace R2EShop.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("R2EShop.Domain.Entities.Product", null)
+                    b.HasOne("R2EShop.Domain.Entities.PhoneCase", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("R2EShop.Domain.Entities.Feedback", b =>
+            modelBuilder.Entity("R2EShop.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("R2EShop.Domain.Entities.Product", "Product")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("ProductId");
+                    b.HasOne("R2EShop.Domain.Entities.Category", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("ParentCategoryId");
+                });
 
-                    b.HasOne("R2EShop.Domain.Entities.User", "User")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("UserId");
+            modelBuilder.Entity("R2EShop.Domain.Entities.Device", b =>
+                {
+                    b.HasOne("R2EShop.Domain.Entities.Device", null)
+                        .WithMany("Devices")
+                        .HasForeignKey("ParentDeviceId");
+                });
 
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
+            modelBuilder.Entity("R2EShop.Domain.Entities.Image", b =>
+                {
+                    b.HasOne("R2EShop.Domain.Entities.PhoneCase", null)
+                        .WithMany("Images")
+                        .HasForeignKey("PhoneCaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.Order", b =>
@@ -213,19 +402,51 @@ namespace R2EShop.Infrastructure.Migrations
                 {
                     b.HasOne("R2EShop.Domain.Entities.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
-                    b.HasOne("R2EShop.Domain.Entities.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("R2EShop.Domain.Entities.PhoneCase", "PhoneCase")
+                        .WithMany()
+                        .HasForeignKey("PhoneCaseId");
 
                     b.Navigation("Order");
 
-                    b.Navigation("Product");
+                    b.Navigation("PhoneCase");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.PhoneCase", b =>
+                {
+                    b.HasOne("R2EShop.Domain.Entities.CaseColor", "CaseColor")
+                        .WithMany()
+                        .HasForeignKey("CaseColorId");
+
+                    b.HasOne("R2EShop.Domain.Entities.CaseType", "CaseType")
+                        .WithMany("PhoneCases")
+                        .HasForeignKey("CaseTypeId");
+
+                    b.HasOne("R2EShop.Domain.Entities.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId");
+
+                    b.Navigation("CaseColor");
+
+                    b.Navigation("CaseType");
+
+                    b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.Rating", b =>
+                {
+                    b.HasOne("R2EShop.Domain.Entities.CaseType", "CaseType")
+                        .WithMany("Ratings")
+                        .HasForeignKey("CaseTypeId");
+
+                    b.HasOne("R2EShop.Domain.Entities.User", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("CaseType");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.User", b =>
@@ -237,25 +458,46 @@ namespace R2EShop.Infrastructure.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("AddressCity");
 
                             b1.Property<string>("State")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("AddressState");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("AddressStreet");
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
 
-                    b.Navigation("Address");
+                    b.Navigation("Address")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.CaseType", b =>
+                {
+                    b.Navigation("PhoneCases");
+
+                    b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("R2EShop.Domain.Entities.Device", b =>
+                {
+                    b.Navigation("Devices");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.Order", b =>
@@ -263,18 +505,16 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("R2EShop.Domain.Entities.Product", b =>
+            modelBuilder.Entity("R2EShop.Domain.Entities.PhoneCase", b =>
                 {
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("OrderItems");
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Feedbacks");
-
                     b.Navigation("Orders");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

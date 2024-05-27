@@ -10,7 +10,16 @@ namespace R2EShop.Domain.Entities
     public class Category : Entity
     {
         public string CategoryName { get; set; } = string.Empty;
-        public string PhotoUrl { get; set; } = string.Empty;
-        public virtual ICollection<Product>? Products { get; set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; set; }
+        public bool IsActive { get; set; }
+        public Guid? ParentCategoryId { get; set; }
+        public virtual ICollection<Category>? Categories { get; set; }
+        public virtual ICollection<PhoneCase>? Products { get; set; }
+
+        public Category()
+        {
+            CreatedAt = DateTime.Now;
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.Interface.Repositories
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface IProductRepository : IGenericRepository<PhoneCase>
     {
     }
 }

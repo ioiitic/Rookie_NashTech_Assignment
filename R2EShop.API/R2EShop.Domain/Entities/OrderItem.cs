@@ -11,6 +11,6 @@ namespace R2EShop.Domain.Entities
     {
         public float ItemPrice { get; set; }
         public virtual Order? Order { get; set; }
-        public virtual Product? Product { get; set; }
+        public virtual PhoneCase? PhoneCase { get; set; }
     }
 }
