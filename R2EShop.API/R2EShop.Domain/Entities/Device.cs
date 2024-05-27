@@ -15,6 +15,7 @@ namespace R2EShop.Domain.Entities
         public bool IsActive { get; set; }
         public Guid? ParentDeviceId { get; set; }
         public virtual ICollection<Device>? Devices { get; set; }
+        public virtual ICollection<CaseType>? CaseTypes { get; set; }
 
         public Device()
         {
