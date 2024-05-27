@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Contracts.CaseType
+namespace R2EShop.Contracts.CaseTypeContract
 {
     public record CreateCaseTypeRequest(
         string CaseTypeName,
         int Protection,
-        int Weight);
+        int Weight,
+        string ImageUrl,
+        Guid DeviceId);
 }
