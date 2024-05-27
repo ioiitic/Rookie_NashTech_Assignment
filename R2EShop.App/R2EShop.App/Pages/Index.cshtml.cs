@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using R2EShop.App.Services.Device;
+using R2EShop.App.ViewModel;
 
 namespace R2EShop.App.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IDeviceService deviceService) : base(deviceService)
         {
-            _logger = logger;
         }
 
         public void OnGet()

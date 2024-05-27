@@ -1,7 +1,15 @@
+using R2EShop.App.Services.Api;
+using R2EShop.App.Services.Device;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient<ApiService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiUrl"]); 
+});
+builder.Services.AddScoped<IDeviceService, DeviceService>();
 
 var app = builder.Build();
 

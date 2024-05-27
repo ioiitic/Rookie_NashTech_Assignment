@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/R2EShop.App.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col font-sans">
     <header class="relative ">
         <nav class="fixed top-0 left-0 right-0 z-40 px-24 mx-auto bg-white border-gray-200 shadow-sm">
             <div class="flex flex-wrap items-center justify-between mx-auto">
@@ -25,64 +25,54 @@
                                 Home
                             </button>
                         </li>
-                        <li id="mega-menu-full-dropdown-button">
-                            <button class="flex p-4 items-center justify-between w-full rounded cursor-default">
-                                Product
-                            </button>
-                            <div id="mega-menu-full-dropdown" class="absolute hidden bg-white w-full top-100 left-0 border-t border-gray-200 shadow-md z-50">
-                                <div class="grid grid-cols-4 divide-x divide-gray-100 max-w-screen-xl p-2 mx-auto text-gray-900">
-                                    <ul class="p-3">
-                                        <li>
-                                            Apple
-                                        </li>
-                                        <li>
-                                            Samsung
-                                        </li>
-                                        <li>
-                                            Google
-                                        </li>
-                                    </ul>
-                                    <ul class="col-span-3 p-3">
-                                        <li>
-                                            <div class="grid grid-cols-4">
-                                                <ul>
-                                                    <li>
-                                                        Iphone
-                                                    </li>
-                                                    <li>
-                                                        Iphone 15
-                                                    </li>
-                                                    <li>
-                                                        Iphone 15
-                                                    </li>
-                                                    <li>
-                                                        Iphone 15
-                                                    </li>
-                                                </ul>
-                                                <ul>
-                                                    <li>
-                                                        Iphone
-                                                    </li>
-                                                    <li>
-                                                        Iphone 15
-                                                    </li>
-                                                    <li>
-                                                        Iphone 15
-                                                    </li>
-                                                    <li>
-                                                        Iphone 15
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
                         <li>
                             <button class="flex p-4 items-center justify-between w-full rounded cursor-default">
-                                Device
+                                Products
                             </button>
+                        </li>
+                        <li id="mega-menu-full-dropdown-devices">
+                            <button class="flex p-4 items-center justify-between w-full rounded cursor-default">
+                                Devices
+                            </button>
+                            <div id="mega-menu-full-dropdown" class="absolute hidden bg-white w-full top-100 left-0 border-t border-gray-200 shadow-md z-50">
+                                <div class="grid grid-cols-4 divide-x divide-gray-100 max-w-screen-xl p-2 px-32 mx-auto text-gray-900">
+                                    <div class="p-3">
+                                        <p class="text-sm text-gray-500 my-4">Shop Devices</p>
+                                        <ul id="parent-device">
+                                            @foreach (var device in @Model.Devices)
+                                            {
+                                                <li class="my-4" onmouseover="showChildDevices(this)">
+                                                    @device.DeviceName
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    @foreach (var device in @Model.Devices)
+                                    {
+                                        <div class="col-span-3 p-3 child-device hidden">
+                                            <div class="grid grid-cols-4">
+                                                @foreach (var childDevice in device.ChildDevices)
+                                                {
+                                                    <div>
+                                                        <p class="text-md text-gray-900 font-semibold my-4">@childDevice.DeviceName</p>
+                                                        <ul>
+                                                            @foreach (var childChildDevice in childDevice.ChildDevices)
+                                                            {
+                                                                <li class="text-sm text-gray-700 font-medium my-2 @(childChildDevice.IsNew?"text-red-600":"") ">
+                                                                    <span>
+                                                                        @(childChildDevice.IsNew ? "NEW!  " : "")
+                                                                        @childChildDevice.DeviceName
+                                                                    </span>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -174,12 +164,24 @@
     </footer>
 
     <script>
+        function showChildDevices(parent) {
+            // Hide all child devices
+            var childDevices = document.querySelectorAll('.child-device');
+            childDevices.forEach(function (childDevice) {
+                childDevice.classList.add('hidden');
+            });
+            
+            // Find the index of the hovered parent device
+            var index = Array.prototype.indexOf.call(parent.parentNode.children, parent);
+
+            // Show the corresponding child device
+            var childDevice = document.querySelectorAll('.child-device')[index];
+            childDevice.classList.remove('hidden');
+        }
+
         let userMenuOpen = false;
         const userMenu = document.getElementById('navbar-user');
         const userDropdown = document.getElementById('user-dropdown');
-
-        const button = document.getElementById('mega-menu-full-dropdown-button');
-        const hoverDiv = document.getElementById('mega-menu-full-dropdown');
 
         userMenu.addEventListener('mouseenter', () => {
             userDropdown.classList.remove('hidden');
@@ -193,16 +195,28 @@
             userDropdown.classList.remove('hidden');
         });
 
-        button.addEventListener('mouseenter', () => {
-            hoverDiv.classList.remove('hidden');
+        const devicesDropdown = document.getElementById('mega-menu-full-dropdown-devices');
+        const hoverDevicesDiv = document.getElementById('mega-menu-full-dropdown');
+
+        devicesDropdown.addEventListener('mouseenter', () => {
+            hoverDevicesDiv.classList.remove('hidden');
+            // Hide all child devices
+            var childDevices = document.querySelectorAll('.child-device');
+            childDevices.forEach(function (childDevice) {
+                childDevice.classList.add('hidden');
+            });
+
+            // Show the corresponding child device
+            var childDevice = document.querySelectorAll('.child-device')[0];
+            childDevice.classList.remove('hidden');
         });
 
-        button.addEventListener('mouseleave', () => {
-            hoverDiv.classList.add('hidden');
+        devicesDropdown.addEventListener('mouseleave', () => {
+            hoverDevicesDiv.classList.add('hidden');
         });
 
-        hoverDiv.addEventListener('mouseenter', () => {
-            hoverDiv.classList.remove('hidden');
+        hoverDevicesDiv.addEventListener('mouseenter', () => {
+            hoverDevicesDiv.classList.remove('hidden');
         });
     </script>
 
