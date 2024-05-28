@@ -14,15 +14,14 @@ namespace R2EShop.Domain.Entities
     {
         public string PhoneCaseName { get; set; } = string.Empty;
         public double PhoneCasePrice { get; set; } = 0;
-        public int NumberOfBuyers { get; set; } = 0;
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<Image> Images { get; set; } = new List<Image>();
-        public virtual Device? Device { get; set; }
-        public virtual CaseType? CaseType { get; set; }
-        public virtual CaseColor? CaseColor { get; set; }
-        public virtual Artwork? Artwork { get; set; }
+        public virtual Guid DeviceId { get; set; }
+        public virtual Guid CaseTypeId { get; set; }
+        public virtual Guid CaseColorId { get; set; }
+        public virtual Guid ArtworkId { get; set; }
         public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
         public PhoneCase()

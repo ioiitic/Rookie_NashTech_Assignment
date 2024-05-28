@@ -10,5 +10,7 @@ namespace R2EShop.Application.Interface.Repositories
 {
     public interface IArtworkRepository : IGenericRepository<Artwork>
     {
+        Task<ICollection<object>> GetNewArtWork();
+        Task<ICollection<object>> GetTrendingArtwork();
     }
 }

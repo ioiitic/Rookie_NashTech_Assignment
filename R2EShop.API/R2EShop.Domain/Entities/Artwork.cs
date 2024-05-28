@@ -10,9 +10,12 @@ namespace R2EShop.Domain.Entities
     public class Artwork : Entity
     {
         public string ArtworkName {  get; set; } = string.Empty;
+        public bool IsNew { get; set; }
+        public bool IsTrending { get; set; }
+        public int NumberOfBuyers { get; set; } = 0;
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
-        public virtual ICollection<PhoneCase> PhoneCases { get; set; } = new List<PhoneCase>();
+        public virtual ICollection<PhoneCase> PhoneCases { get; set; }
     }
 }

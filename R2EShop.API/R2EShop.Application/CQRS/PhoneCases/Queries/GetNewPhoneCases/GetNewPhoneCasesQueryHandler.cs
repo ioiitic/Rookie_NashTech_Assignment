@@ -25,7 +25,6 @@ namespace R2EShop.Application.CQRS.PhoneCases.Queries.GetNewPhoneCases
         {
             // 1. Set up Specification
             var spec = new Specification<PhoneCase>();
-            spec.AddFilter(pc => pc.IsNew);
 
             // 2. Get list new phone cases
             var newPhoneCases = await _unitOfWork.PhoneCases.FindAsync(spec);

@@ -24,18 +24,18 @@ namespace R2EShop.API.Controllers
 
         //SUMMARY: GET method to get new phone case
         //TODO: Validation request
-        [HttpGet]
-        public async Task<IActionResult> GetNew()
-        {
-            // 1. Set up query
-            var query = new GetNewPhoneCasesQuery();
+        //[HttpGet]
+        //public async Task<IActionResult> GetNew()
+        //{
+        //    // 1. Set up query
+        //    var query = new GetNewPhoneCasesQuery();
 
-            // 2. Get list phone case
-            ErrorOr<IList<PhoneCase>> phoneCases = await _mediator.Send(query);
+        //    // 2. Get list phone case
+        //    ErrorOr<IList<PhoneCase>> phoneCases = await _mediator.Send(query);
 
-            return phoneCases.Match(
-                phoneCases => Ok(MappingUtils.MapList<GetNewPhoneCaseResponse, PhoneCase>(phoneCases)),
-                Problem);
-        }
+        //    return phoneCases.Match(
+        //        phoneCases => Ok(MappingUtils.MapList<GetNewPhoneCaseResponse, PhoneCase>(phoneCases)),
+        //        Problem);
+        //}
     }
 }
