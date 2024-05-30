@@ -15,7 +15,7 @@ namespace R2EShop.Domain.Entities
         public bool IsActive { get; set; }
         public Guid? ParentCategoryId { get; set; }
         public virtual ICollection<Category>? Categories { get; set; }
-        public virtual ICollection<PhoneCase>? Products { get; set; }
+        public virtual ICollection<PhoneCase>? PhoneCases { get; set; }
 
         public Category()
         {

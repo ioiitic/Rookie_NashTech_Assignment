@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Application.CQRS.Devices.Query.GetDevices
+namespace R2EShop.Application.CQRS.PhoneCases.Queries.GetNewPhoneCases
 {
-    public record GetDevicesQuery() : IRequest<ErrorOr<IList<Device>>>;
+    public record GetNewPhoneCasesQuery() : IRequest<ErrorOr<IList<PhoneCase>>>;
 }

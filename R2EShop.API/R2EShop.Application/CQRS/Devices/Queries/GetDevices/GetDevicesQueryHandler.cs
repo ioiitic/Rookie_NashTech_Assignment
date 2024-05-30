@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Application.CQRS.Devices.Query.GetDevices
+namespace R2EShop.Application.CQRS.Devices.Queries.GetDevices
 {
     public class GetDevicesQueryHandler 
         : IRequestHandler<GetDevicesQuery, ErrorOr<IList<Device>>>
