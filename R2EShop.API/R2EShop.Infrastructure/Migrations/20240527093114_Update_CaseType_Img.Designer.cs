@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using R2EShop.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using R2EShop.Infrastructure.Data;
 namespace R2EShop.Infrastructure.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527093114_Update_CaseType_Img")]
+    partial class Update_CaseType_Img
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,39 +38,6 @@ namespace R2EShop.Infrastructure.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("CategoryPhoneCase");
-                });
-
-            modelBuilder.Entity("R2EShop.Domain.Entities.Artwork", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ArtworkName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsNew")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsTrending")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NumberOfBuyers")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Artwork");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.CaseColor", b =>
@@ -114,7 +84,7 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DeviceId")
+                    b.Property<Guid?>("DeviceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
@@ -270,9 +240,6 @@ namespace R2EShop.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ArtworkId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("CaseColorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -288,6 +255,9 @@ namespace R2EShop.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int>("NumberOfBuyers")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneCaseName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -299,8 +269,6 @@ namespace R2EShop.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ArtworkId");
 
                     b.HasIndex("CaseColorId");
 
@@ -414,9 +382,7 @@ namespace R2EShop.Infrastructure.Migrations
                 {
                     b.HasOne("R2EShop.Domain.Entities.Device", "Device")
                         .WithMany("CaseTypes")
-                        .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DeviceId");
 
                     b.Navigation("Device");
                 });
@@ -470,10 +436,6 @@ namespace R2EShop.Infrastructure.Migrations
 
             modelBuilder.Entity("R2EShop.Domain.Entities.PhoneCase", b =>
                 {
-                    b.HasOne("R2EShop.Domain.Entities.Artwork", "Artwork")
-                        .WithMany("PhoneCases")
-                        .HasForeignKey("ArtworkId");
-
                     b.HasOne("R2EShop.Domain.Entities.CaseColor", "CaseColor")
                         .WithMany()
                         .HasForeignKey("CaseColorId");
@@ -485,8 +447,6 @@ namespace R2EShop.Infrastructure.Migrations
                     b.HasOne("R2EShop.Domain.Entities.Device", "Device")
                         .WithMany()
                         .HasForeignKey("DeviceId");
-
-                    b.Navigation("Artwork");
 
                     b.Navigation("CaseColor");
 
@@ -542,11 +502,6 @@ namespace R2EShop.Infrastructure.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("R2EShop.Domain.Entities.Artwork", b =>
-                {
-                    b.Navigation("PhoneCases");
                 });
 
             modelBuilder.Entity("R2EShop.Domain.Entities.CaseType", b =>

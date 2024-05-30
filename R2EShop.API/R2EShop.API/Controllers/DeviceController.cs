@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.API.Utils;
 using R2EShop.Application.CQRS.Devices.Command.CreateDevice;
-using R2EShop.Application.CQRS.Devices.Query.GetDevices;
+using R2EShop.Application.CQRS.Devices.Queries.GetDevices;
 using R2EShop.Contracts.DeviceContract;
 using R2EShop.Domain.Entities;
 

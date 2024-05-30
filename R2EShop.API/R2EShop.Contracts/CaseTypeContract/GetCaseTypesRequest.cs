@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Contracts.CaseTypeContract
 {
-    public record CreateCaseTypeRequest(
-        string CaseTypeName,
-        int Protection,
-        int Weight,
-        string ImageUrl,
+    public record GetCaseTypesRequest(
         Guid DeviceId);
 }

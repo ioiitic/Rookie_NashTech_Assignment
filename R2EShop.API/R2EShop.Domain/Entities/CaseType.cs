@@ -10,11 +10,13 @@ namespace R2EShop.Domain.Entities
     public class CaseType : Entity
     {
         public string CaseTypeName { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public int Protection { get; set; } = 0;
         public int Weight { get; set; } = 0;
         public double AverageStar { get; set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; set; }
+        public Device Device { get; set; }  
         public bool IsActive { get; set; }
         public virtual ICollection<Rating>? Ratings { get; set; }
         public virtual ICollection<PhoneCase>? PhoneCases { get; set; }

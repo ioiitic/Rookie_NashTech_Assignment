@@ -1,6 +1,7 @@
 ﻿using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using R2EShop.Application.Interface.Common;
+using R2EShop.Domain.Entities;
 using R2EShop.Domain.Specification;
 using R2EShop.Infrastructure.Data;
 using System;
@@ -14,7 +15,7 @@ namespace R2EShop.Infrastructure.Common
 { 
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly MyDbContext _context;
+        private protected MyDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(MyDbContext context)
@@ -53,6 +54,27 @@ namespace R2EShop.Infrastructure.Common
                 foreach (var include in spec.Includes)
                 {
                     query = query.Include(include);
+                }
+
+                if (spec.OrderByAscending is not null)
+                {
+                    query = query.OrderBy(spec.OrderByAscending);
+                }
+                if (spec.OrderByDescending is not null)
+                {
+                    query = query.OrderBy(spec.OrderByDescending);
+                }
+                foreach (var orderby in spec.ThenBys)
+                {
+                    query = orderby.Item2
+                        ? ((IOrderedQueryable<TEntity>)query).ThenByDescending(orderby.Item1)
+                        : ((IOrderedQueryable<TEntity>)query).ThenBy(orderby.Item1);
+                }
+
+                if (spec.PageNumber > 0 && spec.PageSize >= 0)
+                {
+                    var skip = (spec.PageNumber - 1) * spec.PageSize;
+                    query.Skip(skip).Take(spec.PageSize);
                 }
             }
 

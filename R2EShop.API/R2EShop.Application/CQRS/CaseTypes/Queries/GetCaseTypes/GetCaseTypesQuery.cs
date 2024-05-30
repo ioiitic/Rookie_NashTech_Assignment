@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Application.CQRS.Devices.Query.GetDevices
+namespace R2EShop.Application.CQRS.CaseTypes.Queries.GetCaseTypes
 {
-    public record GetDevicesQuery() : IRequest<ErrorOr<IList<Device>>>;
+    public record GetCaseTypesQuery(
+        Guid DeviceId) : IRequest<ErrorOr<IList<CaseType>>>;
 }

@@ -13,6 +13,7 @@ namespace R2EShop.Infrastructure.Data
     public class MyDbContext : DbContext
     {
         private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        public DbSet<Artwork> Artwork { get; set; }
         public DbSet<CaseColor> CaseColor { get; set; }
         public DbSet<CaseType> CaseType { get; set; }
         public DbSet<Category> Category { get; set; }

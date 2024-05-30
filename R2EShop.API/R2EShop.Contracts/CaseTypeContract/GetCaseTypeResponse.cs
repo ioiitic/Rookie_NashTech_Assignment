@@ -9,6 +9,7 @@ namespace R2EShop.Contracts.CaseTypeContract
     public record GetCaseTypeResponse(
         Guid Id,
         string CaseTypeName,
+        string ImageUrl,
         int Protection,
         int Weight,
         double AverageStar);
