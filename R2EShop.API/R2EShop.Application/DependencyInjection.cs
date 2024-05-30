@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using R2EShop.Application.CQRS.Artworks.Queries.GetNewArtworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace R2EShop.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(DependencyInjection).Assembly);
+            services.AddOptions();
+            services.AddMediatR(typeof(GetNewArtworksQueryHandler).Assembly);
 
             return services;
         }
