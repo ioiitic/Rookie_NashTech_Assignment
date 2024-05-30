@@ -3,6 +3,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.Application.CQRS.Artworks.Command.CreateArtwork;
+using R2EShop.Application.CQRS.Artworks.Queries.GetArtworks;
 using R2EShop.Application.CQRS.Artworks.Queries.GetNewArtworks;
 using R2EShop.Application.CQRS.Artworks.Queries.GetTrendingArtworks;
 using R2EShop.Contracts.ArtworkContract;
@@ -26,7 +27,7 @@ namespace R2EShop.API.Controllers
         //SUMMARY: GET method to get list of artwork by search name, filter category, pagination
         //TODO: All
 
-        //SUMMARY: GET method to get list of new artwork
+        //SUMMARY: GET method to get list of new artworks
         //TODO: Validation request
         [HttpGet("/new")]
         public async Task<IActionResult> GetNew()
@@ -42,7 +43,7 @@ namespace R2EShop.API.Controllers
                 Problem);
         }
 
-        //SUMMARY: GET method to get list of trending artwork
+        //SUMMARY: GET method to get list of trending artworks
         //TODO: Validation request
         [HttpGet("/trending")]
         public async Task<IActionResult> GetTrending()
@@ -51,6 +52,22 @@ namespace R2EShop.API.Controllers
             var query = new GetTrendingArtworksQuery();
 
             // 2. Get list trending artwork
+            ErrorOr<IList<Object>> artworks = await _mediator.Send(query);
+
+            return artworks.Match(
+                artworks => Ok(artworks),
+                Problem);
+        }
+
+        //SUMMARY: GET method to get list of artworks with filter, sort, paging
+        //TODO: Validation request
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] GetArtworksRequest request)
+        {
+            // 1. Set up query
+            var query = _mapper.Map<GetArtworksQuery>(request);
+
+            // 2. Get list artworks
             ErrorOr<IList<Object>> artworks = await _mediator.Send(query);
 
             return artworks.Match(

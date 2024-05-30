@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Artworks.Queries.GetNewArtworks
 {
-    public class GetNewArtworksQueryHandler : IRequestHandler<GetNewArtworksQuery, ErrorOr<IList<Object>>>
+    public class GetNewArtworksQueryHandler : IRequestHandler<GetNewArtworksQuery, ErrorOr<IList<object>>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -20,9 +20,9 @@ namespace R2EShop.Application.CQRS.Artworks.Queries.GetNewArtworks
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ErrorOr<IList<Object>>> Handle(GetNewArtworksQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IList<object>>> Handle(GetNewArtworksQuery request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.Artworks.GetNewArtWork();
+            var result = _unitOfWork.Artworks.GetNewArtWorks();
 
             return result.ToList();
         }

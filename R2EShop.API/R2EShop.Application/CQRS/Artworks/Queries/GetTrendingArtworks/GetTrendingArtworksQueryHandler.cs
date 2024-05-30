@@ -21,9 +21,9 @@ namespace R2EShop.Application.CQRS.Artworks.Queries.GetTrendingArtworks
         //SUMMARY: A service to get list trending artworks
         public async Task<ErrorOr<IList<Object>>> Handle(GetTrendingArtworksQuery request, CancellationToken cancellationToken)
         {
-            var trendingArtworks = await _unitOfWork.Artworks.GetTrendingArtwork();
+            var trendingArtworks = _unitOfWork.Artworks.GetTrendingArtworks();
 
-            return trendingArtworks.ToList();
+            return trendingArtworks.AsQueryable().ToList();
         }
     }
 }

@@ -4,10 +4,13 @@ using R2EShop.Infrastructure.Common;
 using R2EShop.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace R2EShop.Infrastructure.Repositories
 {
@@ -17,22 +20,28 @@ namespace R2EShop.Infrastructure.Repositories
         {
         }
 
-        public async Task<ICollection<object>> GetNewArtWork()
+        public IEnumerable<object> GetNewArtWorks()
         {
             var artworks = _context.Artwork
                 .Where(art => art.IsNew)
+                .Select(art => new
+                {
+                    art.Id,                    
+                    PhoneCase = _context.PhoneCase
+                        .FirstOrDefault(pc => pc.ArtworkId == art.Id)
+                })
                 .Join(
                     _context.PhoneCase,
-                    art => art.Id,
-                    pc => pc.ArtworkId,
-                    (art, pc) => new
+                    pc1 => pc1.PhoneCase.Id,
+                    pc2 => pc2.Id,
+                    (pc1, pc2) => new
                     {
-                        art.Id,
-                        PhoneCaseId = pc.Id,
-                        pc.PhoneCasePrice,
-                        pc.DeviceId,
-                        pc.CaseTypeId,
-                        pc.CaseColorId,
+                        pc1.Id,
+                        PhoneCaseId = pc2.Id,
+                        pc2.PhoneCasePrice,
+                        pc2.DeviceId,
+                        pc2.CaseTypeId,
+                        pc2.Images.First().Url
                     }
                 )
                 .Join(
@@ -44,9 +53,8 @@ namespace R2EShop.Infrastructure.Repositories
                         t1.Id,
                         t1.PhoneCaseId,
                         t1.PhoneCasePrice,
-                        t1.DeviceId,
                         t1.CaseTypeId,
-                        t1.CaseColorId,
+                        t1.Url,
                         dev.DeviceName
                     }
                 )
@@ -57,35 +65,69 @@ namespace R2EShop.Infrastructure.Repositories
                     (t2, ct) => new
                     {
                         t2.Id,
+                        t2.PhoneCaseId,
                         t2.PhoneCasePrice,
-                        t2.DeviceId,
-                        t2.CaseTypeId,
-                        t2.CaseColorId,
                         t2.DeviceName,
+                        t2.Url,
                         ct.CaseTypeName
                     }
                 )
-                .Select(t3 => new
-                {
-                    NumberOfColor = t3,
-                });
-
-            return await artworks.ToListAsync();
+                .Join(
+                    _context.PhoneCase
+                        .GroupBy(pc => pc.ArtworkId)
+                        .Select(pc => new
+                        {
+                            ArtworkId = pc.Key,
+                            NumberOfColor = pc.Select(pc => pc.CaseColorId).Distinct().Count()
+                        }),
+                    t3 => t3.Id,
+                    grp => grp.ArtworkId,
+                    (t3, grp) => new
+                    {
+                        t3.Id,
+                        t3.PhoneCaseId,
+                        t3.PhoneCasePrice,
+                        t3.DeviceName,
+                        t3.CaseTypeName,
+                        t3.Url,
+                        grp.NumberOfColor
+                    }
+                )
+            .Select(t4 => new
+            {
+                t4.Id,
+                t4.PhoneCaseId,
+                t4.PhoneCasePrice,
+                t4.DeviceName,
+                t4.CaseTypeName,
+                t4.Url,
+                t4.NumberOfColor
+            });
+            return artworks;
         }
 
-        public async Task<ICollection<object>> GetTrendingArtwork()
+        public IEnumerable<object> GetTrendingArtworks()
         {
             var artworks = _context.Artwork
-                .Where(art => art.IsNew)
+                .Where(art => art.IsTrending)
+                .Select(art => new
+                {
+                    art.Id,
+                    PhoneCase = _context.PhoneCase
+                        .FirstOrDefault(pc => pc.ArtworkId == art.Id)
+                })
                 .Join(
                     _context.PhoneCase,
-                    art => art.Id,
-                    pc => pc.ArtworkId,
-                    (art, pc) => new
+                    pc1 => pc1.PhoneCase.Id,
+                    pc2 => pc2.Id,
+                    (pc1, pc2) => new
                     {
-                        art.Id,
-                        pc.PhoneCasePrice,
-                        pc.DeviceId,
+                        pc1.Id,
+                        PhoneCaseId = pc2.Id,
+                        pc2.PhoneCasePrice,
+                        pc2.DeviceId,
+                        pc2.CaseTypeId,
+                        pc2.CaseColorId,
                     }
                 )
                 .Join(
@@ -94,19 +136,152 @@ namespace R2EShop.Infrastructure.Repositories
                     dev => dev.Id,
                     (t1, dev) => new
                     {
-                        t1,
+                        t1.Id,
+                        t1.PhoneCaseId,
+                        t1.PhoneCasePrice,
+                        t1.CaseTypeId,
                         dev.DeviceName
                     }
                 )
-                .Select(t2 => new
-                {
-                    t2.t1.Id,
-                    t2.t1.PhoneCasePrice,
-                    t2.t1.DeviceId,
-                    t2.DeviceName
-                });
+                .Join(
+                    _context.CaseType,
+                    t2 => t2.CaseTypeId,
+                    ct => ct.Id,
+                    (t2, ct) => new
+                    {
+                        t2.Id,
+                        t2.PhoneCaseId,
+                        t2.PhoneCasePrice,
+                        t2.DeviceName,
+                        ct.CaseTypeName
+                    }
+                ).Join(
+                    _context.PhoneCase
+                        .GroupBy(pc => pc.ArtworkId)
+                        .Select(pc => new
+                        {
+                            ArtworkId = pc.Key,
+                            NumberOfColor = pc.Select(pc => pc.CaseColorId).Distinct().Count()
+                        }),
+                    t3 => t3.Id,
+                    grp => grp.ArtworkId,
+                    (t3, grp) => new
+                    {
+                        t3.Id,
+                        t3.PhoneCaseId,
+                        t3.PhoneCasePrice,
+                        t3.DeviceName,
+                        t3.CaseTypeName,
+                        grp.NumberOfColor
+                    }
+                )
+            .Select(t4 => new
+            {
+                t4.Id,
+                t4.PhoneCaseId,
+                t4.PhoneCasePrice,
+                t4.DeviceName,
+                t4.CaseTypeName,
+                t4.NumberOfColor
+            });
+            return artworks;
+        }
 
-            return (ICollection<object>)await artworks.ToListAsync();
+        public IEnumerable<object> GetArtworks(
+            string search,
+            int minPrice,
+            int maxPrice, 
+            IList<string>? categoryIds,
+            IList<string>? deviceIds,
+            IList<string>? caseTypeIds,
+            IList<string>? caseColorIds,
+            string sortBy,
+            bool isAscending,
+            int page,
+            int pageSize)
+        {
+            var artworks = _context.Artwork
+                .Where(art => art.ArtworkName.Contains(search))
+                .Select(art => new
+                {
+                    art.Id,
+                    PhoneCase = _context.PhoneCase
+                        .FirstOrDefault(pc => pc.ArtworkId == art.Id && pc.PhoneCasePrice >= minPrice && pc.PhoneCasePrice <= maxPrice
+                        && ((categoryIds == null) ? true : pc.Categories.Any(c => categoryIds.Contains(c.Id.ToString())))
+                        && ((deviceIds == null) ? true : deviceIds.Any(dev => pc.DeviceId.ToString() == dev))
+                        && ((caseTypeIds == null) ? true : caseTypeIds.Any(col => pc.CaseTypeId.ToString() == col))
+                        && ((caseColorIds == null) ? true : caseColorIds.Any(col => pc.CaseColorId.ToString() == col)))
+                })
+                .Join(
+                    _context.PhoneCase,
+                    pc1 => pc1.PhoneCase.Id,
+                    pc2 => pc2.Id,
+                    (pc1, pc2) => new
+                    {
+                        pc1.Id,
+                        PhoneCaseId = pc2.Id,
+                        pc2.PhoneCasePrice,
+                        pc2.DeviceId,
+                        pc2.CaseTypeId,
+                        pc2.CaseColorId,
+                    }
+                )
+                .Join(
+                    _context.Device,
+                    t1 => t1.DeviceId,
+                    dev => dev.Id,
+                    (t1, dev) => new
+                    {
+                        t1.Id,
+                        t1.PhoneCaseId,
+                        t1.PhoneCasePrice,
+                        t1.CaseTypeId,
+                        dev.DeviceName
+                    }
+                )
+                .Join(
+                    _context.CaseType,
+                    t2 => t2.CaseTypeId,
+                    ct => ct.Id,
+                    (t2, ct) => new
+                    {
+                        t2.Id,
+                        t2.PhoneCaseId,
+                        t2.PhoneCasePrice,
+                        t2.DeviceName,
+                        ct.CaseTypeName
+                    }
+                ).Join(
+                    _context.PhoneCase
+                        .GroupBy(pc => pc.ArtworkId)
+                        .Select(pc => new
+                        {
+                            ArtworkId = pc.Key,
+                            NumberOfColor = pc.Select(pc => pc.CaseColorId).Distinct().Count()
+                        }),
+                    t3 => t3.Id,
+                    grp => grp.ArtworkId,
+                    (t3, grp) => new
+                    {
+                        t3.Id,
+                        t3.PhoneCaseId,
+                        t3.PhoneCasePrice,
+                        t3.DeviceName,
+                        t3.CaseTypeName,
+                        grp.NumberOfColor
+                    }
+                )
+            .Select(t4 => new
+            {
+                t4.Id,
+                t4.PhoneCaseId,
+                t4.PhoneCasePrice,
+                t4.DeviceName,
+                t4.CaseTypeName,
+                t4.NumberOfColor
+            });
+            return artworks;
+
         }
     }
 }

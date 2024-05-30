@@ -17,5 +17,10 @@ namespace R2EShop.Domain.Entities
         public DateTime? UpdatedAt { get; set; }
         public bool IsActive { get; set; }
         public virtual ICollection<PhoneCase> PhoneCases { get; set; }
+
+        public Artwork()
+        {
+            CreatedAt = DateTime.Now;
+        }
     }
 }
