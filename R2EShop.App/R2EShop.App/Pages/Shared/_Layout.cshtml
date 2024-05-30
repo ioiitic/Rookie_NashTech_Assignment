@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/R2EShop.App.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
 </head>
-<body class="min-h-screen flex flex-col font-sans">
+<body class="min-h-screen flex flex-col ">
     <header class="relative ">
         <nav class="fixed top-0 left-0 right-0 z-40 px-24 mx-auto bg-white border-gray-200 shadow-sm">
             <div class="flex flex-wrap items-center justify-between mx-auto">
@@ -21,19 +21,23 @@
                 <div id="mega-menu-full" class="items-center justify-between">
                     <ul class="flex space-x-3 text-lg font-semibold text-slate-800">
                         <li>
-                            <button class="flex p-4 items-center justify-between w-full rounded cursor-default">
-                                Home
-                            </button>
+                            <a asp-page="/Index">
+                                <div class="flex p-4 items-center justify-between w-full rounded">
+                                    Home
+                                </div>
+                            </a>
                         </li>
                         <li>
-                            <button class="flex p-4 items-center justify-between w-full rounded cursor-default">
-                                Products
-                            </button>
+                            <a asp-page="/PhoneCase/Index">
+                                <div class="flex p-4 items-center justify-between w-full rounded">
+                                    Products
+                                </div>
+                            </a>
                         </li>
                         <li id="mega-menu-full-dropdown-devices">
-                            <button class="flex p-4 items-center justify-between w-full rounded cursor-default">
+                            <div class="flex p-4 items-center justify-between w-full rounded cursor-default">
                                 Devices
-                            </button>
+                            </div>
                             <div id="mega-menu-full-dropdown" class="absolute hidden bg-white w-full top-100 left-0 border-t border-gray-200 shadow-md z-50">
                                 <div class="grid grid-cols-4 divide-x divide-gray-100 max-w-screen-xl p-2 px-32 mx-auto text-gray-900">
                                     <div class="p-3">
@@ -51,22 +55,28 @@
                                     {
                                         <div class="col-span-3 p-3 child-device hidden">
                                             <div class="grid grid-cols-4">
-                                                @foreach (var childDevice in device.ChildDevices)
+                                                @if (device.ChildDevices != null)
                                                 {
-                                                    <div>
-                                                        <p class="text-md text-gray-900 font-semibold my-4">@childDevice.DeviceName</p>
-                                                        <ul>
-                                                            @foreach (var childChildDevice in childDevice.ChildDevices)
-                                                            {
-                                                                <li class="text-sm text-gray-700 font-medium my-2 @(childChildDevice.IsNew?"text-red-600":"") ">
-                                                                    <span>
-                                                                        @(childChildDevice.IsNew ? "NEW!  " : "")
-                                                                        @childChildDevice.DeviceName
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
+                                                    @foreach (var childDevice in device.ChildDevices)
+                                                    {
+                                                        <div>
+                                                            <p class="text-md text-gray-900 font-semibold my-4">@childDevice.DeviceName</p>
+                                                            <ul>
+                                                                @if (childDevice.ChildDevices != null)
+                                                                {
+                                                                    @foreach (var childChildDevice in childDevice.ChildDevices)
+                                                                    {
+                                                                        <li class="text-sm text-gray-700 font-medium my-2 @(childChildDevice.IsNew?"text-red-600":"") ">
+                                                                            <span>
+                                                                                @(childChildDevice.IsNew ? "NEW!  " : "")
+                                                                                @childChildDevice.DeviceName
+                                                                            </span>
+                                                                        </li>
+                                                                    }
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    }
                                                 }
                                             </div>
                                         </div>

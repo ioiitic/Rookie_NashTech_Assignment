@@ -13,6 +13,7 @@ namespace R2EShop.App.Pages
         public BasePageModel(IDeviceService deviceService)
         {
             _deviceService = deviceService;
+            Devices = new List<DeviceModel>();
         }
 
         public override async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)

@@ -7,6 +7,7 @@
         public ApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri("https://r2eshop-latest.onrender.com/");
         }
     }
 }

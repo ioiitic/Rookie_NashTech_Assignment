@@ -14,7 +14,6 @@ namespace R2EShop.App.Services.Device
 
         public async Task<IList<DeviceModel>> GetDevicesAsync()
         {
-            _httpClient.BaseAddress = new Uri("http://localhost:3001/");
             var response = await _httpClient.GetAsync("devices");
 
             response.EnsureSuccessStatusCode();
