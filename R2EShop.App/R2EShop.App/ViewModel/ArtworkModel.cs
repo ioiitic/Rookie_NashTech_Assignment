@@ -6,5 +6,5 @@
         double PhoneCasePrice,
         string DeviceName,
         string CaseTypeName,
-        int NumberOfColors);
+        int numberOfColor);
 }

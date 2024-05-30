@@ -1,5 +1,7 @@
 using R2EShop.App.Services.Api;
-using R2EShop.App.Services.Device;
+using R2EShop.App.Services.ArtworkService;
+using R2EShop.App.Services.CategoryService;
+using R2EShop.App.Services.DeviceService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddHttpClient<ApiService>(client =>
     client.BaseAddress = new Uri(builder.Configuration["ApiUrl"]); 
 });
 builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IArtworkService, ArtworkService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

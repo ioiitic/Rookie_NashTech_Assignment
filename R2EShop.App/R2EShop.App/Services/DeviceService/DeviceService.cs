@@ -4,7 +4,7 @@ using R2EShop.App.Services.Api;
 using R2EShop.App.ViewModel;
 using System.Net.Http;
 
-namespace R2EShop.App.Services.Device
+namespace R2EShop.App.Services.DeviceService
 {
     public class DeviceService : ApiService, IDeviceService
     {
