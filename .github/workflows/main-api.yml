@@ -92,7 +92,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
   
       - name: Build Docker image
-        run: docker build -t build-env:latest -f ./R2EShop.API/R2EShop.API/Dockerfile ./R2EShop.API
+        run: docker build -t build-env:latest -f ./R2EShop.API/R2EShop.API/Dockerfile .
         
       - name: Tag Docker image
         run: docker tag build-env:latest khoitranminh592003/r2eshop:latest
