@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - R2EShop.App</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/R2EShop.App.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+</head>
+<body class="min-h-screen flex flex-col ">
+    <header class="relative ">
+        <nav class="fixed top-0 left-0 right-0 z-40 px-24 mx-auto bg-white border-gray-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between mx-auto">
+                <a href="#" class="flex items-center">
+                    <img src="https://cdn.shopify.com/s/files/1/0558/6413/1764/files/Rewrite_Reasons_Why_You_Should_Have_A_Black_White_Logo_Design_1_1024x1024.jpg?v=1700188874" 
+                    class="h-20" alt="Flowbite Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap">Flowbite</span>
+                </a>
+
+                <div id="mega-menu-full" class="items-center justify-between">
+                    <ul class="flex space-x-3 text-lg font-semibold text-slate-800">
+                        <li>
+                            <a asp-page="/Index">
+                                <div class="flex p-4 items-center justify-between w-full rounded">
+                                    Home
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-page="/PhoneCase/Index">
+                                <div class="flex p-4 items-center justify-between w-full rounded">
+                                    Products
+                                </div>
+                            </a>
+                        </li>
+                        <li id="mega-menu-full-dropdown-devices">
+                            <div class="flex p-4 items-center justify-between w-full rounded cursor-default">
+                                Devices
+                            </div>
+                            <div id="mega-menu-full-dropdown" class="absolute hidden bg-white w-full top-100 left-0 border-t border-gray-200 shadow-md z-50">
+                                <div class="grid grid-cols-4 divide-x divide-gray-100 max-w-screen-xl p-2 px-32 mx-auto text-gray-900">
+                                    <div class="p-3">
+                                        <p class="text-sm text-gray-500 my-4">Shop Devices</p>
+                                        <ul id="parent-device">
+                                            @foreach (var device in @Model.Devices)
+                                            {
+                                                <li class="my-4" onmouseover="showChildDevices(this)">
+                                                    @device.DeviceName
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    @foreach (var device in @Model.Devices)
+                                    {
+                                        <div class="col-span-3 p-3 child-device hidden">
+                                            <div class="grid grid-cols-4">
+                                                @if (device.ChildDevices != null)
+                                                {
+                                                    @foreach (var childDevice in device.ChildDevices)
+                                                    {
+                                                        <div>
+                                                            <p class="text-md text-gray-900 font-semibold my-4">@childDevice.DeviceName</p>
+                                                            <ul>
+                                                                @if (childDevice.ChildDevices != null)
+                                                                {
+                                                                    @foreach (var childChildDevice in childDevice.ChildDevices)
+                                                                    {
+                                                                        <li class="text-sm text-gray-700 font-medium my-2 @(childChildDevice.IsNew?"text-red-600":"") ">
+                                                                            <span>
+                                                                                @(childChildDevice.IsNew ? "NEW!  " : "")
+                                                                                @childChildDevice.DeviceName
+                                                                            </span>
+                                                                        </li>
+                                                                    }
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex text-center items-center justify-between space-x-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
+                    <div id="navbar-user" class="relative bg-white">
+                        <button type="button" class="flex text-sm bg-gray-800 rounded-full" 
+                        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+                        </button>      
+                        <div class="absolute right-0 bg-white divide-y divide-gray-100 rounded-lg shadow hidden" id="user-dropdown">
+                            <div class="px-4 py-3">
+                                <span class="block text-sm text-gray-900">Bonnie Green</span>
+                                <span class="block text-sm  text-gray-500 truncate">name@flowbite.com</span>
+                            </div>
+                            <ul class="py-2" aria-labelledby="user-menu-button">
+                                <li>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-950 hover:bg-gray-100">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Earnings</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="flex-grow">
+        <main role="main" class="mt-24 px-16 mx-auto">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-gray-900">
+        <div class="container mx-auto max-w-screen-md flex justify-between p-4 py-6">
+            <div>
+                <a href="" class="flex items-center mb-6">
+                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" />
+                    <span class="text-white">Flowbite</span>
+                </a>
+            </div>
+            <div class="grid grid-cols-3 gap-8">
+                <div>
+                    <h2 class="text-sm font-semibold text-white mb-6">Resources</h2>
+                    <ul class="text-gray-400">
+                        <li class ="mb-4">
+                            <a>Flowbite</a>
+                        </li>
+                        <li>
+                            <a>Flowbite</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-sm font-semibold text-white mb-6">Resources</h2>
+                    <ul class="text-gray-400">
+                        <li class="mb-4">
+                            <a>Flowbite</a>
+                        </li>
+                        <li>
+                            <a>Flowbite</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-sm font-semibold text-white mb-6">Resources</h2>
+                    <ul class="text-gray-400">
+                        <li class="mb-4">
+                            <a>Flowbite</a>
+                        </li>
+                        <li>
+                            <a>Flowbite</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showChildDevices(parent) {
+            // Hide all child devices
+            var childDevices = document.querySelectorAll('.child-device');
+            childDevices.forEach(function (childDevice) {
+                childDevice.classList.add('hidden');
+            });
+            
+            // Find the index of the hovered parent device
+            var index = Array.prototype.indexOf.call(parent.parentNode.children, parent);
+
+            // Show the corresponding child device
+            var childDevice = document.querySelectorAll('.child-device')[index];
+            childDevice.classList.remove('hidden');
+        }
+
+        let userMenuOpen = false;
+        const userMenu = document.getElementById('navbar-user');
+        const userDropdown = document.getElementById('user-dropdown');
+
+        userMenu.addEventListener('mouseenter', () => {
+            userDropdown.classList.remove('hidden');
+        });
+
+        userMenu.addEventListener('mouseleave', () => {
+            userDropdown.classList.add('hidden');
+        });
+
+        userDropdown.addEventListener('mouseenter', () => {
+            userDropdown.classList.remove('hidden');
+        });
+
+        const devicesDropdown = document.getElementById('mega-menu-full-dropdown-devices');
+        const hoverDevicesDiv = document.getElementById('mega-menu-full-dropdown');
+
+        devicesDropdown.addEventListener('mouseenter', () => {
+            hoverDevicesDiv.classList.remove('hidden');
+            // Hide all child devices
+            var childDevices = document.querySelectorAll('.child-device');
+            childDevices.forEach(function (childDevice) {
+                childDevice.classList.add('hidden');
+            });
+
+            // Show the corresponding child device
+            var childDevice = document.querySelectorAll('.child-device')[0];
+            childDevice.classList.remove('hidden');
+        });
+
+        devicesDropdown.addEventListener('mouseleave', () => {
+            hoverDevicesDiv.classList.add('hidden');
+        });
+
+        hoverDevicesDiv.addEventListener('mouseenter', () => {
+            hoverDevicesDiv.classList.remove('hidden');
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

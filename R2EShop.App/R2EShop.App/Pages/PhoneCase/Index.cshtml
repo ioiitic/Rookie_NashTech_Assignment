@@ -1,0 +1,85 @@
+﻿@page
+@model R2EShop.App.Pages.PhoneCase.IndexModel
+@{
+}
+<div class="mx-32">
+    <h1 class="font-extrabold text-3xl ">iPhone 15 Pro Max Cases</h1>
+    <div class="grid grid-cols-4 divide-x divide-gray-100 w-full text-gray-900 ">
+        <div class="pr-8 divide-y divide-gray-100">
+            <div class="py-8 font-bold text-lg">
+                <div class="flex items-center justify-between">
+                    <div class="relative w-2/5">
+                        <input type="number" id="minPrice" name="minPrice" min="0" class="w-full text-sm block pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none 
+                            focus:border-indigo-500 focus:ring focus:ring-indigo-200" placeholder="Min Price" />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500">
+                                $
+                            </span>
+                        </div>
+                    </div>
+                    <span class="text-gray-500 text-xl">
+                        -
+                    </span>
+
+                    <div class="relative w-2/5">
+                        <input type="number" id="maxPrice" name="maxPrice" min="0" class="w-full text-sm block pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none
+                            focus:border-indigo-500 focus:ring focus:ring-indigo-200" placeholder="Max Price" />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500">
+                                $
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @foreach (var category in Model.Categories)
+            {
+                <ul class="py-8">
+                    <li class="font-bold">
+                        @category.CategoryName
+                    </li>
+                    @if (category.ChildCategories != null)
+                    {
+                        <ul>
+                            @foreach (var categoryChild in category.ChildCategories)
+                            {
+                                <li>
+                                    <div class="flex items-center space-x-3 mr-4 my-2">
+                                        <input type="checkbox" class="w-5 h-5 text-gray-600 bg-gray-200 border-gray-300 rounded focus:ring-gray-800 accent-black
+                                        focus:ring-offset-gray-800">
+                                        <label for="link-checkbox" class="">@categoryChild.CategoryName</label>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </ul>
+            }                
+            <div class="w-full flex justify-end py-8">
+                <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2">Shop now</button>
+            </div>
+
+        </div>
+        <div class="col-span-3 p-3">
+            <div class="grid grid-cols-4 flex justify-between text-center">
+                @foreach(var artwork in Model.Artworks)
+                {
+                    <div class="p-2">
+                        <a href="#">
+                            <img class="rounded-t-lg" src="https://cdn-image02.casetify.com/usr/8600/22388600/~v4183/22173940x2_iphone-15-pro-max__color_natural-titanium_16005996.png.1000x1000-w.m80.webp" alt="" />
+                        </a>
+                        <div class="p-5">
+                            <a href="#" class="font-bold text-md">
+                                <h5>@artwork.DeviceName</h5>
+                                <h5>@artwork.CaseTypeName</h5>
+                                <h5>@artwork.numberOfColor.ToString() color</h5>
+                                <p>@artwork.PhoneCasePrice.ToString() 30$</p>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
