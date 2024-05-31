@@ -24,5 +24,7 @@ namespace R2EShop.Application.Interface.Repositories
             bool isAscending,
             int page,
             int pageSize);
+
+        IEnumerable<object> GetArtwork(Guid id);
     }
 }

@@ -3,6 +3,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.Application.CQRS.Artworks.Command.CreateArtwork;
+using R2EShop.Application.CQRS.Artworks.Queries.GetArtwork;
 using R2EShop.Application.CQRS.Artworks.Queries.GetArtworks;
 using R2EShop.Contracts.ArtworkContract;
 using R2EShop.Domain.Entities;
@@ -34,7 +35,23 @@ namespace R2EShop.API.Controllers
             var query = _mapper.Map<GetArtworksQuery>(request);
 
             // 2. Get list artworks
-            ErrorOr<IList<Object>> artworks = await _mediator.Send(query);
+            ErrorOr<IList<object>> artworks = await _mediator.Send(query);  
+
+            return artworks.Match(
+                Ok,
+                Problem);
+        }
+
+        //SUMMARY: GET method to get list of artworks with filter, sort, paging
+        //TODO: Validation request
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            // 1. Set up query
+            var query = new GetArtworkQuery(id);
+
+            // 2. Get list artworks
+            ErrorOr<IList<object>> artworks = await _mediator.Send(query);
 
             return artworks.Match(
                 artworks => Ok(artworks),
