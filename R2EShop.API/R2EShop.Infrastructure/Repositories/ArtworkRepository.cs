@@ -42,6 +42,7 @@ namespace R2EShop.Infrastructure.Repositories
                 .Select(art => new
                 {
                     art.Id,
+                    art.ArtworkName,
                     PhoneCase = _context.PhoneCase
                         .FirstOrDefault(pc => pc.ArtworkId == art.Id && pc.PhoneCasePrice >= minPrice && pc.PhoneCasePrice <= maxPrice
                         && ((categoryIds == null) ? true : pc.Categories.Any(c => categoryIds.Contains(c.Id.ToString())))
@@ -56,6 +57,7 @@ namespace R2EShop.Infrastructure.Repositories
                     (pc1, pc2) => new
                     {
                         pc1.Id,
+                        pc1.ArtworkName,
                         PhoneCaseId = pc2.Id,
                         pc2.PhoneCasePrice,
                         pc2.DeviceId,
@@ -70,6 +72,7 @@ namespace R2EShop.Infrastructure.Repositories
                     (t1, dev) => new
                     {
                         t1.Id,
+                        t1.ArtworkName,
                         t1.PhoneCaseId,
                         t1.PhoneCasePrice,
                         t1.CaseTypeId,
@@ -83,6 +86,7 @@ namespace R2EShop.Infrastructure.Repositories
                     (t2, ct) => new
                     {
                         t2.Id,
+                        t2.ArtworkName,
                         t2.PhoneCaseId,
                         t2.PhoneCasePrice,
                         t2.DeviceName,
@@ -101,6 +105,7 @@ namespace R2EShop.Infrastructure.Repositories
                     (t3, grp) => new
                     {
                         t3.Id,
+                        t3.ArtworkName,
                         t3.PhoneCaseId,
                         t3.PhoneCasePrice,
                         t3.DeviceName,
@@ -111,6 +116,7 @@ namespace R2EShop.Infrastructure.Repositories
             .Select(t4 => new
             {
                 t4.Id,
+                t4.ArtworkName,
                 t4.PhoneCaseId,
                 t4.PhoneCasePrice,
                 t4.DeviceName,

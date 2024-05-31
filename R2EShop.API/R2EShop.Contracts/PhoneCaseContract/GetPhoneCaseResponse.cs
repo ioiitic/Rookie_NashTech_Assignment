@@ -1,5 +1,4 @@
-﻿using R2EShop.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Contracts.PhoneCaseContract
 {
-    public record PhoneCaseResponse(
-        Guid Id,
+    public record Images(string url);
+    public record GetPhoneCaseResponse(
         string PhoneCaseName,
         double PhoneCasePrice,
-        string ImageUrl,
-        string DeviceName,
-        string CaseTypeName,
-        string numberOf);
+        IList<Images> Images);
 }
