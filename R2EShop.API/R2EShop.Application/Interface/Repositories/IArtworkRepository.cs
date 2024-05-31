@@ -10,12 +10,12 @@ namespace R2EShop.Application.Interface.Repositories
 {
     public interface IArtworkRepository : IGenericRepository<Artwork>
     {
-        IEnumerable<object> GetNewArtWorks();
-        IEnumerable<object> GetTrendingArtworks();
         IEnumerable<object> GetArtworks(
             string search,
             int minPrice,
             int maxPrice,
+            bool IsNew,
+            bool IsTrending,
             IList<string>? categoryIds,
             IList<string>? deviceIds,
             IList<string>? caseTypeIds,

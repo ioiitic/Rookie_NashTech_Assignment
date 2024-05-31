@@ -10,6 +10,8 @@ namespace R2EShop.Contracts.ArtworkContract
         string Search = "",
         int MinPrice = 0,
         int MaxPrice = 999999999,
+        bool IsNew = false,
+        bool IsTrending = false,
         IList<string>? CategoryIds = null,
         IList<string>? DeviceIds = null,
         IList<string>? CaseTypeIds = null,
