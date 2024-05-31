@@ -28,6 +28,8 @@ namespace R2EShop.Infrastructure.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
+                //Note: Remove this to migrationgotnet
+                //.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../R2EShop.API/"))
                 .AddJsonFile("appsettings.json")
                 .Build();
 
