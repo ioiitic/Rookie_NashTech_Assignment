@@ -20,177 +20,12 @@ namespace R2EShop.Infrastructure.Repositories
         {
         }
 
-        public IEnumerable<object> GetNewArtWorks()
-        {
-            var artworks = _context.Artwork
-                .Where(art => art.IsNew)
-                .Select(art => new
-                {
-                    art.Id,                    
-                    PhoneCase = _context.PhoneCase
-                        .FirstOrDefault(pc => pc.ArtworkId == art.Id)
-                })
-                .Join(
-                    _context.PhoneCase,
-                    pc1 => pc1.PhoneCase.Id,
-                    pc2 => pc2.Id,
-                    (pc1, pc2) => new
-                    {
-                        pc1.Id,
-                        PhoneCaseId = pc2.Id,
-                        pc2.PhoneCasePrice,
-                        pc2.DeviceId,
-                        pc2.CaseTypeId,
-                        pc2.Images.First().Url
-                    }
-                )
-                .Join(
-                    _context.Device,
-                    t1 => t1.DeviceId,
-                    dev => dev.Id,
-                    (t1, dev) => new
-                    {
-                        t1.Id,
-                        t1.PhoneCaseId,
-                        t1.PhoneCasePrice,
-                        t1.CaseTypeId,
-                        t1.Url,
-                        dev.DeviceName
-                    }
-                )
-                .Join(
-                    _context.CaseType,
-                    t2 => t2.CaseTypeId,
-                    ct => ct.Id,
-                    (t2, ct) => new
-                    {
-                        t2.Id,
-                        t2.PhoneCaseId,
-                        t2.PhoneCasePrice,
-                        t2.DeviceName,
-                        t2.Url,
-                        ct.CaseTypeName
-                    }
-                )
-                .Join(
-                    _context.PhoneCase
-                        .GroupBy(pc => pc.ArtworkId)
-                        .Select(pc => new
-                        {
-                            ArtworkId = pc.Key,
-                            NumberOfColor = pc.Select(pc => pc.CaseColorId).Distinct().Count()
-                        }),
-                    t3 => t3.Id,
-                    grp => grp.ArtworkId,
-                    (t3, grp) => new
-                    {
-                        t3.Id,
-                        t3.PhoneCaseId,
-                        t3.PhoneCasePrice,
-                        t3.DeviceName,
-                        t3.CaseTypeName,
-                        t3.Url,
-                        grp.NumberOfColor
-                    }
-                )
-            .Select(t4 => new
-            {
-                t4.Id,
-                t4.PhoneCaseId,
-                t4.PhoneCasePrice,
-                t4.DeviceName,
-                t4.CaseTypeName,
-                t4.Url,
-                t4.NumberOfColor
-            });
-            return artworks;
-        }
-
-        public IEnumerable<object> GetTrendingArtworks()
-        {
-            var artworks = _context.Artwork
-                .Where(art => art.IsTrending)
-                .Select(art => new
-                {
-                    art.Id,
-                    PhoneCase = _context.PhoneCase
-                        .FirstOrDefault(pc => pc.ArtworkId == art.Id)
-                })
-                .Join(
-                    _context.PhoneCase,
-                    pc1 => pc1.PhoneCase.Id,
-                    pc2 => pc2.Id,
-                    (pc1, pc2) => new
-                    {
-                        pc1.Id,
-                        PhoneCaseId = pc2.Id,
-                        pc2.PhoneCasePrice,
-                        pc2.DeviceId,
-                        pc2.CaseTypeId,
-                        pc2.CaseColorId,
-                    }
-                )
-                .Join(
-                    _context.Device,
-                    t1 => t1.DeviceId,
-                    dev => dev.Id,
-                    (t1, dev) => new
-                    {
-                        t1.Id,
-                        t1.PhoneCaseId,
-                        t1.PhoneCasePrice,
-                        t1.CaseTypeId,
-                        dev.DeviceName
-                    }
-                )
-                .Join(
-                    _context.CaseType,
-                    t2 => t2.CaseTypeId,
-                    ct => ct.Id,
-                    (t2, ct) => new
-                    {
-                        t2.Id,
-                        t2.PhoneCaseId,
-                        t2.PhoneCasePrice,
-                        t2.DeviceName,
-                        ct.CaseTypeName
-                    }
-                ).Join(
-                    _context.PhoneCase
-                        .GroupBy(pc => pc.ArtworkId)
-                        .Select(pc => new
-                        {
-                            ArtworkId = pc.Key,
-                            NumberOfColor = pc.Select(pc => pc.CaseColorId).Distinct().Count()
-                        }),
-                    t3 => t3.Id,
-                    grp => grp.ArtworkId,
-                    (t3, grp) => new
-                    {
-                        t3.Id,
-                        t3.PhoneCaseId,
-                        t3.PhoneCasePrice,
-                        t3.DeviceName,
-                        t3.CaseTypeName,
-                        grp.NumberOfColor
-                    }
-                )
-            .Select(t4 => new
-            {
-                t4.Id,
-                t4.PhoneCaseId,
-                t4.PhoneCasePrice,
-                t4.DeviceName,
-                t4.CaseTypeName,
-                t4.NumberOfColor
-            });
-            return artworks;
-        }
-
         public IEnumerable<object> GetArtworks(
             string search,
             int minPrice,
-            int maxPrice, 
+            int maxPrice,
+            bool IsNew,
+            bool IsTrending,
             IList<string>? categoryIds,
             IList<string>? deviceIds,
             IList<string>? caseTypeIds,
@@ -201,7 +36,9 @@ namespace R2EShop.Infrastructure.Repositories
             int pageSize)
         {
             var artworks = _context.Artwork
-                .Where(art => art.ArtworkName.Contains(search))
+                .Where(art => art.ArtworkName.Contains(search)
+                    && ((IsNew) ? art.IsNew : true)
+                    && ((IsTrending) ? art.IsTrending : true))
                 .Select(art => new
                 {
                     art.Id,

@@ -13,6 +13,8 @@ namespace R2EShop.Application.CQRS.Artworks.Queries.GetArtworks
         string Search,
         int MinPrice,
         int MaxPrice,
+        bool IsNew,
+        bool IsTrending,
         IList<string>? CategoryIds,
         IList<string>? DeviceIds,
         IList<string>? CaseTypeIds,

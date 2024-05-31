@@ -28,6 +28,8 @@ namespace R2EShop.Application.CQRS.Artworks.Queries.GetArtworks
                 request.Search,
                 request.MinPrice,
                 request.MaxPrice,
+                request.IsNew,
+                request.IsTrending,
                 request.CategoryIds,
                 request.DeviceIds,
                 request.CaseTypeIds,
