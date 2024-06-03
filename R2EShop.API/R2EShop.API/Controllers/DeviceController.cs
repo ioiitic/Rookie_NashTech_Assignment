@@ -33,10 +33,11 @@ namespace R2EShop.API.Controllers
             var query = new GetDevicesQuery();
 
             // 2. Get list devices
-            ErrorOr<IList<Device>> devices = await _mediator.Send(query);
+            ErrorOr<IList<object>> devices = await _mediator.Send(query);
 
             return devices.Match(
-                devices => Ok(MappingUtils.MapList<GetDevicesResponse, Device>(devices, _mapper)),
+                //devices => Ok(MappingUtils.MapList<GetDevicesResponse, Device>(devices, _mapper)),
+                devices => Ok(devices),
                 Problem);
         }
 

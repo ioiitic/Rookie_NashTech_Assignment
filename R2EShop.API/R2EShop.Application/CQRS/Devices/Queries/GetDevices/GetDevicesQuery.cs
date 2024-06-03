@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Application.CQRS.Devices.Queries.GetDevices
 {
-    public record GetDevicesQuery() : IRequest<ErrorOr<IList<Device>>>;
+    public record GetDevicesQuery() : IRequest<ErrorOr<IList<object>>>;
 }
