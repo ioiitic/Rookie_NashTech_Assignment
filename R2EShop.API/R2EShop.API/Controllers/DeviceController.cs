@@ -3,6 +3,8 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using R2EShop.Application.CQRS.Devices.Command.CreateDevice;
+using R2EShop.Application.CQRS.Devices.Command.DeleteDevice;
+using R2EShop.Application.CQRS.Devices.Command.UpdateDevice;
 using R2EShop.Application.CQRS.Devices.Queries.GetDevices;
 using R2EShop.Application.CQRS.Devices.Queries.GetDevicesTree;
 using R2EShop.Contracts.DeviceContract;
@@ -71,11 +73,11 @@ namespace R2EShop.API.Controllers
 
         //SUMMARY: PUT method to update a device
         //TODO: All
-        [HttpPatch]
-        public async Task<IActionResult> Update([FromBody] CreateDeviceRequest request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateDeviceRequest request)
         {
             // 1. Set up command
-            var command = _mapper.Map<CreateDeviceCommand>(request);
+            var command = new UpdateDeviceCommand(id, request.DeviceName);
 
             // 2. Create a device
             ErrorOr<Unit> result = await _mediator.Send(command);
@@ -87,5 +89,18 @@ namespace R2EShop.API.Controllers
 
         //SUMMARY: DELETE method to delete a device
         //TODO: All
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            // 1. Set up command
+            var command = new DeleteDeviceCommand(id);
+
+            // 2. Create a device
+            ErrorOr<Unit> result = await _mediator.Send(command);
+
+            return result.Match(
+                res => Ok(),
+                Problem);
+        }
     }
 }

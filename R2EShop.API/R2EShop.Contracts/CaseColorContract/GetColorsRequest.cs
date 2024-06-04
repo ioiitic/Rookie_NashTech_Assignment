@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace R2EShop.Contracts.CaseColorContract
 {
-    public record GetColorsResponse(
-        Guid Id,
-        string CaseColorName,
-        string ImageUrl);
+    public record GetColorsRequest(string filter, string range, string sort);
 }
