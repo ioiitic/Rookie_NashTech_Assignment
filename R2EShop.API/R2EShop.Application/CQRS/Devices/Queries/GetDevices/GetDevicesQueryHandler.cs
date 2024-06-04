@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace R2EShop.Application.CQRS.Devices.Queries.GetDevices
 {
     public class GetDevicesQueryHandler 
-        : IRequestHandler<GetDevicesQuery, ErrorOr<IList<Device>>>
+        : IRequestHandler<GetDevicesQuery, ErrorOr<IList<object>>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -21,15 +21,10 @@ namespace R2EShop.Application.CQRS.Devices.Queries.GetDevices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ErrorOr<IList<Device>>> Handle(GetDevicesQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IList<object>>> Handle(GetDevicesQuery request, CancellationToken cancellationToken)
         {
-            // 1. Set up query
-            var spec = new Specification<Device>();
-            spec.AddFilter(dev => dev.ParentDeviceId == null);
-            spec.Include(dev => dev.Devices);
-
-            // 2. Get devices
-            var devices = await _unitOfWork.Devices.FindAsync(spec);
+            // 1. Get devices
+            var devices = await _unitOfWork.Devices.GetDevices();
 
             return devices.ToList();
         }
