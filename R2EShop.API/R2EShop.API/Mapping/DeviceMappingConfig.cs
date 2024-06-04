@@ -11,10 +11,9 @@ namespace R2EShop.API.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Device, GetDevicesResponse>()
-                .Map(desc => desc.ChildDevices,
-                    src => src.Devices == null ? null : src.Devices.Select(dev => new { dev.Id, dev.DeviceName }).ToList());
-
+            //config.NewConfig<Device, GetDevicesResponse>()
+            //    .Map(desc => desc.ChildDevices,
+            //        src => src.Devices == null ? null : src.Devices.Select(dev => new { dev.Id, dev.DeviceName }).ToList());
             config.NewConfig<Category, GetCategoriesResponse>()
                 .Map(desc => desc.ChildCategories,
                     src => src.Categories == null ? null : src.Categories.Select(dev => new { dev.Id, dev.CategoryName }).ToList());

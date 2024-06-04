@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Application.CQRS.Devices.Queries.GetDevices
+namespace R2EShop.Application.CQRS.CaseColors.Queries.GetColors
 {
-    public record GetDevicesQuery(
+    public record GetColorsQuery(
         string filter,
         string range,
-        string sort) : IRequest<ErrorOr<IList<Device>>>;
+        string sort) : IRequest<ErrorOr<IList<CaseColor>>>;
 }

@@ -124,7 +124,14 @@ namespace R2EShop.Infrastructure.Repositories
                 t4.NumberOfColor
             });
             return artworks;
+        }
 
+        public IEnumerable<object> GetArtwork(Guid id)
+        {
+            var artworks = _context.Artwork
+                .Where(art => art.Id == id);
+               
+            return artworks;
         }
     }
 }

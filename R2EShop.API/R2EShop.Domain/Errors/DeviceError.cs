@@ -12,5 +12,8 @@ namespace R2EShop.Domain.Errors
         public static Error ParentNotExist => Error.NotFound(
             code: "Device.ParentNotFound",
             description: "Device parent is not found.");
+        public static Error NotExist => Error.NotFound(
+            code: "Device.NotFound",
+            description: "Device is not found.");
     }
 }
