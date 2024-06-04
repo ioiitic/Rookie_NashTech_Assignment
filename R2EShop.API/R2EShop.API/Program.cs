@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using R2EShop.API;
+using R2EShop.API.Middleware;
 using R2EShop.Application;
 using R2EShop.Infrastructure;
 
@@ -12,6 +13,7 @@ builder.Services
     .AddInfrastructure();
 
 var app = builder.Build();
+app.UseMiddleware<AddContentRangeHeaderMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -23,6 +25,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseExceptionHandler("/error");
 
 //app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

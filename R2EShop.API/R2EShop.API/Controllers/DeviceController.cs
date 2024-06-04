@@ -24,10 +24,9 @@ namespace R2EShop.API.Controllers
             _mapper = mapper;
         }
 
-        //SUMMARY: GET method to get all devices
         //TODO: Validation request
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] GetDevicesRequest request)
         {
             // 1. Set up query
             var query = new GetDevicesQuery();

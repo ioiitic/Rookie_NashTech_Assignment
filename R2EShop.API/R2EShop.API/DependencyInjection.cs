@@ -25,6 +25,18 @@ namespace R2EShop.API
 
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .WithExposedHeaders("Content-Range");
+                    });
+            });
             return services;
         }
     }
