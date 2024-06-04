@@ -9,22 +9,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace R2EShop.Application.CQRS.Devices.Queries.GetDevices
+namespace R2EShop.Application.CQRS.Devices.Queries.GetDevicesTree
 {
-    public class GetDevicesQueryHandler 
-        : IRequestHandler<GetDevicesQuery, ErrorOr<IList<Device>>>
+    public class GetDevicesTreeQueryHandler 
+        : IRequestHandler<GetDevicesTreeQuery, ErrorOr<IList<object>>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public GetDevicesQueryHandler(IUnitOfWork unitOfWork)
+        public GetDevicesTreeQueryHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ErrorOr<IList<Device>>> Handle(GetDevicesQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IList<object>>> Handle(GetDevicesTreeQuery request, CancellationToken cancellationToken)
         {
             // 1. Get devices
-            var devices = await _unitOfWork.Devices.GetAllAsync();
+            var devices = await _unitOfWork.Devices.GetDevices();
 
             return devices.ToList();
         }

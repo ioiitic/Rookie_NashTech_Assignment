@@ -10,5 +10,5 @@ namespace R2EShop.Contracts.DeviceContract
     public record GetDevicesResponse(
         Guid Id,
         string DeviceName,
-        IList<GetDevicesResponse> ChildDevices);
+        Guid? ParentDeviceId);
 }
