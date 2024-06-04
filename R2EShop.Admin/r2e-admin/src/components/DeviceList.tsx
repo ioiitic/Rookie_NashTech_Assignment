@@ -1,32 +1,33 @@
 import React from "react";
-import { List, Datagrid, TextField, FunctionField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  EditButton,
+  DeleteButton,
+  TextInput,
+} from "react-admin";
 
-interface Device {
-  id: string;
-  deviceName: string;
-  childDevices: Device[] | null;
-}
-
-const renderTree = (devices: Device[] | null) => {
-  if (!devices) return null;
-  return devices.map((device) => (
-    <div key={device.id}>
-      <TextField record={device} source="deviceName" />
-      {renderTree(device.childDevices)}
-    </div>
-  ));
-};
+const postFilters = [
+  <TextInput label="Device" source="DeviceName" />,
+  <TextInput label="Parent" source="Parent Id" />,
+];
 
 const DeviceList: React.FC = (props) => {
   return (
-    <List {...props} title="Device List" perPage={10} pagination={false}>
+    <List
+      {...props}
+      title="Device List"
+      filters={postFilters}
+      perPage={10}
+      pagination={false}
+    >
       <Datagrid>
         <TextField source="id" />
         <TextField source="deviceName" />
-        <FunctionField
-          label="Child Devices"
-          render={(record: Device) => renderTree(record.childDevices)}
-        />
+        <TextField source="parentDeviceId" />
+        <EditButton />
+        <DeleteButton />
       </Datagrid>
     </List>
   );
